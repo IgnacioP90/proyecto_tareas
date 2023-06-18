@@ -1,6 +1,6 @@
 # proyecto_tareas
 
-Este proyecto es un gestor de tareas simple desarrollado en Python. Permite a los usuarios crear, editar y administrar sus tareas de manera eficiente.
+Este proyecto Gestor de Tareas es una aplicación que permite al usuario administrar sus tareas de manera efectiva. Al ejecutar la aplicación, se mostrará un menú con diferentes opciones, como agregar una nueva tarea, editar una tarea existente, marcar una tarea como completada, ver la lista de tareas pendientes, ver la lista de tareas completadas, buscar tareas por criterios específicos, entre otros.
 
 ## Requisitos
 
@@ -22,18 +22,8 @@ Una vez que hayas instalado y ejecutado el proyecto, puedes seguir estos pasos p
 
 2. Sigue las instrucciones en pantalla para crear una nueva tarea, marcar una tarea como completada, editar una tarea existente o eliminar una tarea.
 
-3. ¡Disfruta de la gestión eficiente de tus tareas!
-
 ## Contribución
 
-¡Las contribuciones son bienvenidas! Si deseas contribuir a este proyecto, sigue estos pasos
+¡Las contribuciones son bienvenidas! Si deseas contribuir a este proyecto, puedes hacerlo con total libertad, esta en fase de desarrollo, lo ideal es que sea una aplicacion con interfaz grafica.
 
-1. Realiza un fork del repositorio.
 
-2. Crea una rama con una nueva funcionalidad o solución a un problema
-
-3. Realiza los cambios necesarios y realiza los commits
-
-4. Envía tus cambios al repositorio remoto
-
-5. Abre una solicitud de extracción en GitHub.
