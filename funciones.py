@@ -1,4 +1,6 @@
 from bd_connect import *
+from datetime import *
+fecha_actual = datetime.now()
 def agregar_tarea(titulo,desc,fec_venc,prioridad):
     conexion.execute("insert into tareas (titulo, descripcion, fec_ven, prioridad, estado) values (?,?,?,?,?)" , (titulo,desc,fec_venc,prioridad,"pendiente"))
     conexion.commit()
