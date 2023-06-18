@@ -20,7 +20,7 @@ Una vez que hayas instalado y ejecutado el proyecto, puedes seguir estos pasos p
 
 1. Abre el gestor de tareas en tu terminal o línea de comandos.
 
-2. Sigue las instrucciones en pantalla para crear una nueva tarea, marcar una tarea como completada, editar una tarea existente o eliminar una tarea.
+2. Sigue las instrucciones en pantalla para crear una nueva tarea, marcar una tarea como completada, editar una tarea existente (eliminar una tarea aun no esta implementado).
 
 ## Contribución
 
