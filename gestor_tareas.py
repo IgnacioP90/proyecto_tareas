@@ -1,5 +1,5 @@
+from bd_connect import *
 from funciones import *
-
 def main():
     while True:
         vencen=vencimientos()
@@ -187,3 +187,4 @@ def main():
                 print("|elija una opcion valida|")
                 print("-------------------------")
         input()
+    conexion.close()

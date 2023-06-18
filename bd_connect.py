@@ -1,4 +1,6 @@
 import sqlite3
+from datetime import *
+fecha_actual = datetime.now()
 conexion=sqlite3.connect("bd1.db")
 try:
     conexion.execute(f"""CREATE TABLE tareas (
