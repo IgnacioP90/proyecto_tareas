@@ -72,29 +72,31 @@ def main():
                                 print("--------------------------------------------")
             # flujo para editar una tarea     
             case "3":
-                titulo=title()
-                print("")
-                try:
-                    opcion_2("1",titulo=titulo)
-                    opcion=input(f"""elija una de las opciones a editar:
-                                    1) titulo
-                                    2) descripcion
-                                    3) fecha de vencimiento
-                                    4) prioridad
-: """)
-                    resultado=opcion_3(titulo,opcion)
-                    if resultado == 1:
-                        print("--------------------------------------------------")
-                        print("|No se puede editar una tarea completa o vencida.|")
-                        print("--------------------------------------------------") 
-                    else:
-                        print("-------------------------")
-                        print("|Se ha editado la tarea.|")
-                        print("-------------------------")
-                except ValueError:
-                    print("---------------------")
-                    print("|No existe la tarea.|")
-                    print("---------------------")      
+                error=opcion_7()
+                if error:
+                    try:
+                        titulo=title()
+                        print("")
+                        opcion_2("1",titulo=titulo)
+                        opcion=input(f"""elija una de las opciones a editar:
+                                        1) titulo
+                                        2) descripcion
+                                        3) fecha de vencimiento
+                                        4) prioridad
+    : """)
+                        resultado=opcion_3(titulo,opcion)
+                        if resultado == 1:
+                            print("--------------------------------------------------")
+                            print("|No se puede editar una tarea completa o vencida.|")
+                            print("--------------------------------------------------") 
+                        else:
+                            print("-------------------------")
+                            print("|Se ha editado la tarea.|")
+                            print("-------------------------")
+                    except ValueError:
+                        print("---------------------")
+                        print("|No existe la tarea.|")
+                        print("---------------------")      
             #flujo para marcar una tarea como completa
             case "4":
                 try:
@@ -127,17 +129,19 @@ def main():
             case "7":
                 opcion_7()    
             case "8":
-                try:
-                    opcion_7()
-                    titulo=title()
-                    opcion_8(titulo)
-                    print("-------------------------------")
-                    print("|Tarea correctamente eliminada|")
-                    print("-------------------------------")
-                except ValueError:
-                    print("------------------------------")
-                    print("|No se pudo eliminar la tarea|")
-                    print("------------------------------")
+                error=opcion_7()
+                if error:
+                    try:
+                        
+                        titulo=title()
+                        opcion_8(titulo)
+                        print("-------------------------------")
+                        print("|Tarea correctamente eliminada|")
+                        print("-------------------------------")
+                    except ValueError:
+                        print("------------------------------")
+                        print("|No se pudo eliminar la tarea|")
+                        print("------------------------------")
             case "0":
                 break
             case _:

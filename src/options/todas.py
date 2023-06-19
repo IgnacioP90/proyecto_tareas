@@ -3,10 +3,10 @@ from ..func.funciones import *
 def opcion_7():
     resultado = todas()
     print("")
-    if resultado:
+    try:
         imprimir_tuplas(resultado)
         return 1
-    else:
+    except ValueError:
         print("-------------------")
         print("|No existen tareas|")
         print("-------------------")

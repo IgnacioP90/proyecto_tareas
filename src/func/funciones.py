@@ -148,7 +148,7 @@ def title():
     while True:
         titulo=input("Ingrese titulo de la tarea: ")
         if len(titulo) > 25 or len(titulo)==0:
-            print("Ingrese un titulo mas cortoo que no este vacia.")
+            print("Ingrese un titulo mas corto que no este vacia.")
         else:
             break
     titulo=titulo.lower()
