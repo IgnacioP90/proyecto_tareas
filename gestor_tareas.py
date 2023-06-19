@@ -12,8 +12,10 @@ def main():
     while True:
         vencen=vencimientos()
         if vencen:
-            print(f"Cantidad de tareas vencidas: {vencen[0]}")
+            if(vencen[0]>=1):
+                print(f"Tienes {vencen[0]} tareas vencidas, tienes la posibilidad de editarlas si asi lo deseas.")
             print(f"Cantidad de tareas que vencen en un dia: {vencen[1]}")
+            
             print("")
         accion=input(f"""Seleccione entre una de estas opciones:
                     1) agregar tarea
@@ -32,60 +34,55 @@ def main():
                 opcion_1()
             # flujo para buscar una tarea
             case "2":
-                opcion_7()
-                eleccion=input(f"""Elija una de las opciones a buscar:
-                                1) titulo
-                                2) fecha de vencimiento
-                                3) prioridad
-: """)
-                
-                match eleccion:
-                    #buscar tarea por titulo
-                    case "1":
-                        titulo=title()
-                        try:
-                            
-                            opcion_2(eleccion,titulo=titulo)
-                        except:
-                            print("-----------------------------------------")
-                            print("|No se encontro una tarea con ese titulo|")
-                            print("-----------------------------------------")
-                    # buscar tarea por fecha de vencimiento
-                    case "2":
-                        print("Ingrese la tarea a buscar por fecha de vencimiento: ")
-                        fec_venc=fecha_vencimiento(eleccion=eleccion) 
-                        try:  
-                            opcion_2(eleccion,fec_venc=fec_venc)                
-                        except:
-                            print("----------------------------------------")
-                            print("|No se encontro una tarea con esa fecha|")
-                            print("----------------------------------------")
-                    # buscar tarea por prioridad
-                    case "3":
-                        priori=prioridad()
-                        try:
-                            opcion_2(eleccion,priori=priori)
-                        except:
-                            print("----------------------------------------")
-                            print("|No se encontro una tarea con esa fecha|")
-                            print("----------------------------------------")
+                result=opcion_7()
+                if result:
+                    eleccion=input(f"""Elija una de las opciones a buscar:
+                                    1) titulo
+                                    2) fecha de vencimiento
+                                    3) prioridad
+    : """)
+                    match eleccion:
+                        #buscar tarea por titulo
+                        case "1":
+                            titulo=title()
+                            try:
+                                opcion_2(eleccion,titulo=titulo)
+                            except ValueError:
+                                print("-----------------------------------------")
+                                print("|No se encontro una tarea con ese titulo|")
+                                print("-----------------------------------------")
+                        # buscar tarea por fecha de vencimiento
+                        case "2":
+                            print("Ingrese la tarea a buscar por fecha de vencimiento: ")
+                            fec_venc=fecha_vencimiento(eleccion=eleccion) 
+                            try:  
+                                opcion_2(eleccion,fec_venc=fec_venc)                
+                            except ValueError:
+                                print("----------------------------------------")
+                                print("|No se encontroaron tareas con esa fecha|")
+                                print("----------------------------------------")
+                        # buscar tarea por prioridad
+                        case "3":
+                            priori=prioridad()
+                            try:
+                                opcion_2(eleccion,priori=priori)
+                            except ValueError:
+                                print("--------------------------------------------")
+                                print("|No se encontraron tareas con esa prioridad|")
+                                print("--------------------------------------------")
             # flujo para editar una tarea     
             case "3":
                 titulo=title()
                 print("")
-                comprobar=opcion_3(titulo)
-                if comprobar==2:
-                    print("---------------------")
-                    print("|No existe la tarea.|")
-                    print("---------------------")
-                else:
+                try:
+                    opcion_2("1",titulo=titulo)
                     opcion=input(f"""elija una de las opciones a editar:
                                     1) titulo
                                     2) descripcion
                                     3) fecha de vencimiento
                                     4) prioridad
-    : """)
-                    resultado=opcion_3(titulo,opcion=opcion)
+: """)
+                    resultado=opcion_3(titulo,opcion)
                     if resultado == 1:
                         print("--------------------------------------------------")
                         print("|No se puede editar una tarea completa o vencida.|")
@@ -94,6 +91,10 @@ def main():
                         print("-------------------------")
                         print("|Se ha editado la tarea.|")
                         print("-------------------------")
+                except ValueError:
+                    print("---------------------")
+                    print("|No existe la tarea.|")
+                    print("---------------------")      
             #flujo para marcar una tarea como completa
             case "4":
                 try:
@@ -102,7 +103,7 @@ def main():
                     print("Tarea a completar.")
                     titulo=title()
                     opcion_4(titulo)
-                except TypeError:
+                except ValueError:
                     print("-------------------------------")
                     print("|No hay tareas para completar.|")
                     print("-------------------------------")
@@ -110,7 +111,7 @@ def main():
             case "5":
                 try:
                     opcion_5()
-                except TypeError:
+                except ValueError:
                     print("--------------------------")
                     print("|No hay tareas pendientes|")
                     print("--------------------------")
@@ -118,7 +119,7 @@ def main():
             case "6":
                 try:
                     opcion_6()
-                except TypeError:
+                except ValueError:
                     print("-------------------------")
                     print("|No hay tareas completas|")
                     print("-------------------------")
@@ -133,7 +134,7 @@ def main():
                     print("-------------------------------")
                     print("|Tarea correctamente eliminada|")
                     print("-------------------------------")
-                except TypeError:
+                except ValueError:
                     print("------------------------------")
                     print("|No se pudo eliminar la tarea|")
                     print("------------------------------")

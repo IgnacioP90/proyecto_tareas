@@ -24,12 +24,12 @@ def tareas_pendientes():
     else:
         return None
 
-def editar_tarea(titulo, opcion, variable):
+def editar_tarea(titulo, variable, opcion):
     #selecciono la fila que tenga el mismo titulo que traje a la funcion, luego pregunto si esta en estado pendiente y ahi si la edito,
     #sino no hago nada
-    tarea=conexion.execute("SELECT * FROM tareas WHERE titulo=?" , (titulo,))
+    tarea=conexion.execute("SELECT * FROM tareas WHERE titulo=?" , (titulo, ))
     data=tarea.fetchone()
-    if(data[4]=='pendiente'):
+    if(data[4]!='completa'):
         match (opcion):
             case "1": 
                 conexion.execute("UPDATE tareas SET titulo=? WHERE titulo=?" , (variable,titulo))
@@ -43,6 +43,7 @@ def editar_tarea(titulo, opcion, variable):
             case "4":
                 conexion.execute("UPDATE tareas SET prioridad=? WHERE titulo=?" , (variable,titulo))
                 conexion.commit()
+        return None
     else:
         return 1 # retorno una bandera para hacer una comprobacion
 
@@ -104,13 +105,17 @@ def fecha_vencimiento(eleccion=None): # eleccion=None lo use porque hay veces qu
     return fec_venc
 # actualiza las tareas, cuando la fecha de vencimiento de la tarea, sobrepasa a la tarea actual, cada una de ellas tendra el estado a vencida, estando en estado pendiente
 def actualizar(fecha_actual):
-    estado=conexion.execute("SELECT fec_ven, estado FROM tareas WHERE estado='pendiente'")
+    estado=conexion.execute("SELECT fec_ven, estado FROM tareas")
     status=estado.fetchall()
     for stat in status:
         fecha = datetime.strptime(stat[0], "%Y-%m-%d %H:%M:%S")
         if fecha<=fecha_actual and stat[1]!='completa':
             conexion.execute("UPDATE tareas SET estado='vencida' WHERE fec_ven=?", (fecha,))
             conexion.commit()
+        if fecha>=fecha_actual and stat[1]=='vencida':
+            conexion.execute("UPDATE tareas SET estado='pendiente' WHERE fec_ven=?", (fecha,))
+            conexion.commit()
+            
         
 # valido la variable prioridad                
 def prioridad():
@@ -163,4 +168,14 @@ def delete(query,titulo):
         conexion.execute("DELETE FROM tareas WHERE titulo=?" , (titulo,))
         conexion.commit()
     else:
-        return None
+        raise ValueError
+    
+def imprimir_tuplas(tupla):
+    if tupla:
+        print("{:<25} | {:<30} | {:<22} | {:<10} | {:<10}".format("titulo", "descripcion", "fecha de vencimiento", "prioridad", "estado"))
+        for filas in tupla:
+            print("{:<25} | {:<30} | {:<22} | {:<10} | {:<10}".format(filas[0], filas[1], filas[2], filas[3], filas[4]))
+        print("")
+    else:
+        raise ValueError
+    

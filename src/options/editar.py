@@ -1,9 +1,9 @@
 from ..bd_connect import *
 from ..func.funciones import *
-def opcion_3(titulo,opcion=None):
-    comprobar=conexion.execute("SELECT * FROM tareas WHERE titulo=?" , (titulo,))
+def opcion_3(titulo,opcion):
+    comprobar=conexion.execute("SELECT * FROM tareas WHERE titulo=?" , (titulo, ))
     esto=comprobar.fetchone()
-    if esto:
+    if esto!=None:
         match opcion:
             # opcion para editar el titulo
             case "1":    
@@ -17,7 +17,7 @@ def opcion_3(titulo,opcion=None):
             # opcion para editar la prioridad
             case "4":                                         
                 variable=prioridad()
-        e = editar_tarea(titulo, opcion, variable)
+        e = editar_tarea(titulo, variable, opcion)
         return e
     else:
         return 2 # aca es donde compruebo si existe la tarea
