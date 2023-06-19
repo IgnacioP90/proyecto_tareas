@@ -9,8 +9,6 @@ def completar_tarea(titulo):
         if(status[4]=='pendiente'):
             conexion.execute("UPDATE tareas SET estado='completa' WHERE titulo=?", (titulo,))
             conexion.commit()
-            resultado=conexion.execute("SELECT * FROM tareas WHERE titulo=?", (titulo,)) #vuelvo a hacer la misma consulta ya actualizada
-            status=resultado.fetchone()
         return status
    
 def tareas_pendientes():
