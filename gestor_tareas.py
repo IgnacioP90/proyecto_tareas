@@ -1,18 +1,20 @@
-from bd_connect import *
-from funciones import *
-from agregar import opcion_1
-from buscar import opcion_2
-from editar import opcion_3
-from completar import opcion_4
-from pendientes import opcion_5
-from completas import opcion_6
-from todas import opcion_7
+from src.bd_connect import *
+from src.func.funciones import *
+from src.options.agregar import opcion_1
+from src.options.buscar import opcion_2
+from src.options.editar import opcion_3
+from src.options.completar import opcion_4
+from src.options.pendientes import opcion_5
+from src.options.completas import opcion_6
+from src.options.todas import opcion_7
+from src.options.eliminar import opcion_8
 def main():
     while True:
         vencen=vencimientos()
-        print(f"Cantidad de tareas vencidas: {vencen[0]}")
-        print(f"Cantidad de tareas que vencen en un dia: {vencen[1]}")
-        print("")
+        if vencen:
+            print(f"Cantidad de tareas vencidas: {vencen[0]}")
+            print(f"Cantidad de tareas que vencen en un dia: {vencen[1]}")
+            print("")
         accion=input(f"""Seleccione entre una de estas opciones:
                     1) agregar tarea
                     2) buscar tarea
@@ -21,6 +23,7 @@ def main():
                     5) mostrar todas las tareas pendientes
                     6) mostrar todas las tareas completas
                     7) mostrar todas las tareas
+                    8) eliminar tarea
                     0) salir         
 : """)
         match accion:
@@ -29,16 +32,19 @@ def main():
                 opcion_1()
             # flujo para buscar una tarea
             case "2":
+                opcion_7()
                 eleccion=input(f"""Elija una de las opciones a buscar:
                                 1) titulo
                                 2) fecha de vencimiento
                                 3) prioridad
 : """)
+                
                 match eleccion:
                     #buscar tarea por titulo
                     case "1":
-                        titulo=input("Ingrese el titulo a buscar por titulo: ").lower()
+                        titulo=title()
                         try:
+                            
                             opcion_2(eleccion,titulo=titulo)
                         except:
                             print("-----------------------------------------")
@@ -65,7 +71,7 @@ def main():
                             print("----------------------------------------")
             # flujo para editar una tarea     
             case "3":
-                titulo=input("Ingrese titulo de la tarea: ")
+                titulo=title()
                 print("")
                 comprobar=opcion_3(titulo)
                 if comprobar==2:
@@ -91,12 +97,15 @@ def main():
             #flujo para marcar una tarea como completa
             case "4":
                 try:
-                    titulo=input("Ingrese la tarea a completar: ")
+                    opcion_5()
+                    print("")
+                    print("Tarea a completar.")
+                    titulo=title()
                     opcion_4(titulo)
                 except TypeError:
-                    print("---------------------")
-                    print("|La tarea no existe.|")
-                    print("---------------------")
+                    print("-------------------------------")
+                    print("|No hay tareas para completar.|")
+                    print("-------------------------------")
             # flujo para mostrar las tareas pendientes
             case "5":
                 try:
@@ -115,12 +124,19 @@ def main():
                     print("-------------------------")
             #flujo para mostrar todas las tareas
             case "7":
+                opcion_7()    
+            case "8":
                 try:
                     opcion_7()
+                    titulo=title()
+                    opcion_8(titulo)
+                    print("-------------------------------")
+                    print("|Tarea correctamente eliminada|")
+                    print("-------------------------------")
                 except TypeError:
-                    print("-------------------")
-                    print("|No existen tareas|")
-                    print("-------------------")
+                    print("------------------------------")
+                    print("|No se pudo eliminar la tarea|")
+                    print("------------------------------")
             case "0":
                 break
             case _:
