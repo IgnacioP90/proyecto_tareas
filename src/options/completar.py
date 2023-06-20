@@ -1,7 +1,7 @@
 from ..bd_connect import *
 from ..func.funciones import *
 def opcion_4(titulo):
-    done=completar_tarea(titulo)
+    done=completar_tarea(titulo)  
     print("")
     match done[4]:
         case "pendiente":

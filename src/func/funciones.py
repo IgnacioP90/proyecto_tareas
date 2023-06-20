@@ -1,8 +1,8 @@
 from ..bd_connect import *
 from datetime import *
 fecha_actual = datetime.now()
-def agregar_tarea(titulo,desc,fec_venc,prioridad):
-    conexion.execute("insert into tareas (titulo, descripcion, fec_ven, prioridad, estado) values (?,?,?,?,?)" , (titulo,desc,fec_venc,prioridad,"pendiente"))
+def agregar_tarea(titulo,desc,fec_venc,prioridad,numero):
+    conexion.execute("INSERT INTO tareas (titulo, descripcion, fec_ven, prioridad, estado, limite) VALUES (?,?,?,?,?,?)" , (titulo,desc,fec_venc,prioridad,'pendiente',numero))
     conexion.commit()
     
 def completar_tarea(titulo): 
@@ -93,10 +93,11 @@ def fecha_vencimiento(eleccion=None): # eleccion=None lo use porque hay veces qu
             dia=int(input("ingrese dia en formato DD: "))
             mes=int(input("ingrese mes en formato MM: "))
             anio=int(input("ingrese año en formato YYYY: "))    # ingreso la fecha para luego convertirla a formato datetime
-            fecha_hora_str=f"{anio}-{mes}-{dia} 00:00:00"  # todo lo que ingrese, lo transformo a string
-            fec_venc=datetime.strptime(fecha_hora_str, "%Y-%m-%d %H:%M:%S")  # ahora se convierte a formato datetime con el metodo strptime
-            fec_convert=convertir(fec_venc)
-            if fecha_actual>fec_convert and eleccion==None:
+            hora=int(input("ingrese hora: "))
+            minuto=int(input("ingrese minutos: "))
+            fecha_hora_str=f"{anio}-{mes}-{dia} {hora}:{minuto}:00"  # todo lo que ingrese, lo transformo a string
+            fec_venc=convertir(fecha_hora_str)  # ahora se convierte a formato datetime con el metodo strptime
+            if fecha_actual>fec_venc and eleccion==None:
                 print("ha ingresado una fecha anterior a la fecha actual")
             else:
                 break
@@ -105,15 +106,29 @@ def fecha_vencimiento(eleccion=None): # eleccion=None lo use porque hay veces qu
     return fec_venc
 # actualiza las tareas, cuando la fecha de vencimiento de la tarea, sobrepasa a la tarea actual, cada una de ellas tendra el estado a vencida, estando en estado pendiente
 def actualizar(fecha_actual):
-    estado=conexion.execute("SELECT fec_ven, estado FROM tareas")
+    try:
+        conexion.execute("SELECT limite FROM tareas")
+    except sqlite3.OperationalError:
+        conexion.execute("ALTER TABLE tareas ADD limite INT")
+        conexion.commit()
+    estado=conexion.execute("SELECT titulo, fec_ven, estado, limite FROM tareas")
     status=estado.fetchall()
     for stat in status:
-        fecha = datetime.strptime(stat[0], "%Y-%m-%d %H:%M:%S")
-        if fecha<=fecha_actual and stat[1]!='completa':
-            conexion.execute("UPDATE tareas SET estado='vencida' WHERE fec_ven=?", (fecha,))
+        if(stat[3]==None):
+            conexion.execute("UPDATE tareas SET limite=0 WHERE limite IS NULL")
             conexion.commit()
-        if fecha>=fecha_actual and stat[1]=='vencida':
-            conexion.execute("UPDATE tareas SET estado='pendiente' WHERE fec_ven=?", (fecha,))
+        fecha=convertir(stat[1])
+        limite=stat[3]
+        limit=cantidad_dias(fecha,limite) 
+        vencidas=limit-fecha_actual
+        tareas_por_vencer=vencidas.days*24+vencidas.seconds // 3600
+
+        if tareas_por_vencer<=0 and stat[2] == 'pendiente':
+            conexion.execute("UPDATE tareas SET estado='vencida' WHERE titulo=? and fec_ven=?", (stat[0], fecha))
+            conexion.commit()
+                
+        if limit>=fecha_actual and stat[1]=='vencida':
+            conexion.execute("UPDATE tareas SET estado='pendiente' WHERE titulo=? and fec_ven=?", (stat[0], fecha))
             conexion.commit()
             
         
@@ -131,24 +146,36 @@ def prioridad():
 def vencimientos():
     a=0
     b=0
-    todo=todas()
+    c=[]
+    d=[]
     actualizar(fecha_actual)
+    todo=todas()
     if todo:
         for tareas in todo:
             s=convertir(tareas[2]) # Debo convertirlo a tipo datetime porque desde la base de datos esta en tipo str
-            vencidas=s-fecha_actual #resto la fecha actual con cada una de las fechas que aparecen en la base de datos
+            limit=cantidad_dias(s,tareas[5]) # actualizo la fecha de vencimiento para que me muestre la fecha sumado a los dias que se le agrega al vencimiento, seria, sumando fecha de vencimiento y limite
+            vencidas=limit-fecha_actual #resto la fecha actual con cada una de las fechas que aparecen en la base de datos
             tareas_por_vencer=vencidas.days*24+vencidas.seconds // 3600 # convierto la fecha en numeros, el equivalente a las horas.
+            dias=vencidas.days
+            horas=vencidas.seconds//3600
+            if(dias==0):
+                total=f"{horas} hs"
+            else:
+                total=f"{dias} dias {horas} hs"
             if(tareas[4] == 'vencida'):
-                a+=1
-            if(tareas_por_vencer<=24 and tareas[4] == 'pendiente'):  
-                b+=1
-        return a,b
+                a+=1    
+            if(tareas_por_vencer<=168 and tareas[4] == 'pendiente'):
+                if(tareas_por_vencer<=24 and tareas_por_vencer>=0): 
+                    b+=1
+                d.append(total)
+                c.append(tareas[0])
+        return a,b,c,d
 
 def title():
     while True:
         titulo=input("Ingrese titulo de la tarea: ")
         if len(titulo) > 25 or len(titulo)==0:
-            print("Ingrese un titulo mas corto que no este vacia.")
+            print("Ingrese un titulo mas corto que no este vacio.")
         else:
             break
     titulo=titulo.lower()
@@ -158,7 +185,7 @@ def descript():
     while True:
         desc=input("Ingrese una breve descripcion: ")
         if len(desc) > 30 or len(desc)==0:
-            print("Ingrese una descripcion mas corto o que no este vacia.")
+            print("Ingrese una descripcion mas corta o que no este vacia.")
         else:
             break
     return desc
@@ -178,4 +205,21 @@ def imprimir_tuplas(tupla):
         print("")
     else:
         raise ValueError
+
+def cantidad_dias(fec_venc,limite):
+    if limite == 0:
+        return fec_venc
+    dias=fec_venc+timedelta(days=limite)
+    return dias
+
+def mostrar_vencidas(vencidas=None,vencen_1=None,titulos=None,vencen=None):
+    if vencidas >= 1:
+        print(f"Tienes {vencidas} tarea(s) vencida(s). Tienes la posibilidad de editarlas si así lo deseas.")
+    else:
+        print("Felicidades, no tienes tareas vencidas!")
+    print(f"Cantidad de tareas que vencen en un día: {vencen_1}")
+    print("Nombre de la(s) tarea(s) que vencerá(n): ")
+    for titulo, vencimiento in zip(titulos, vencen):
+        print(f"Titulo: {titulo} - Vence en: {vencimiento}")
+    print("")
     

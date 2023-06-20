@@ -7,10 +7,10 @@ def opcion_3(titulo,opcion):
         match opcion:
             # opcion para editar el titulo
             case "1":    
-                variable=input("Ingrese un nuevo titulo: ")
+                variable=title()
             # opcion para editar la descripcion
             case "2":                                        
-                variable=input("Ingrese una nueva descripcion: ")
+                variable=descript()
                 # opcion para editar la fecha
             case "3":                                         
                 variable=fecha_vencimiento(opcion)

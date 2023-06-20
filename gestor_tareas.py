@@ -10,13 +10,13 @@ from src.options.todas import opcion_7
 from src.options.eliminar import opcion_8
 def main():
     while True:
-        vencen=vencimientos()
-        if vencen:
-            if(vencen[0]>=1):
-                print(f"Tienes {vencen[0]} tareas vencidas, tienes la posibilidad de editarlas si asi lo deseas.")
-            print(f"Cantidad de tareas que vencen en un dia: {vencen[1]}")
-            
-            print("")
+        
+        actualizar(fecha_actual)
+        try:
+            vencen = vencimientos()
+            mostrar_vencidas(vencen[0],vencen[1],vencen[2], vencen[3])
+        except:
+            pass
         accion=input(f"""Seleccione entre una de estas opciones:
                     1) agregar tarea
                     2) buscar tarea
@@ -31,7 +31,12 @@ def main():
         match accion:
             #flujo para agregar una tarea
             case "1":
-                opcion_1()
+                try:
+                    opcion_1()
+                except KeyboardInterrupt:
+                    print("--------------------")
+                    print("Ya existe esa tarea.")
+                    print("--------------------")
             # flujo para buscar una tarea
             case "2":
                 result=opcion_7()
@@ -109,6 +114,10 @@ def main():
                     print("-------------------------------")
                     print("|No hay tareas para completar.|")
                     print("-------------------------------")
+                except TypeError:
+                    print("---------------------")
+                    print("|La tarea no existe.|")
+                    print("---------------------")
             # flujo para mostrar las tareas pendientes
             case "5":
                 try:
@@ -132,16 +141,15 @@ def main():
                 error=opcion_7()
                 if error:
                     try:
-                        
                         titulo=title()
                         opcion_8(titulo)
                         print("-------------------------------")
                         print("|Tarea correctamente eliminada|")
                         print("-------------------------------")
                     except ValueError:
-                        print("------------------------------")
-                        print("|No se pudo eliminar la tarea|")
-                        print("------------------------------")
+                        print("-----------------------------------------------")
+                        print("|No se pudo eliminar la tarea porque no existe|")
+                        print("-----------------------------------------------")
             case "0":
                 break
             case _:

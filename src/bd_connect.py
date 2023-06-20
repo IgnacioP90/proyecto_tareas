@@ -7,6 +7,7 @@ try:
                                 fec_ven TEXT,
                                 prioridad TEXT,
                                 estado TEXT
+                                limite INT
                         )""")
     print("Base de datos creada con exito")
 except sqlite3.Error as e:
