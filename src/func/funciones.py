@@ -93,9 +93,7 @@ def fecha_vencimiento(eleccion=None): # eleccion=None lo use porque hay veces qu
             dia=int(input("ingrese dia en formato DD: "))
             mes=int(input("ingrese mes en formato MM: "))
             anio=int(input("ingrese año en formato YYYY: "))    # ingreso la fecha para luego convertirla a formato datetime
-            hora=int(input("ingrese hora: "))
-            minuto=int(input("ingrese minutos: "))
-            fecha_hora_str=f"{anio}-{mes}-{dia} {hora}:{minuto}:00"  # todo lo que ingrese, lo transformo a string
+            fecha_hora_str=f"{anio}-{mes}-{dia} 00:00:00"  # todo lo que ingrese, lo transformo a string
             fec_venc=convertir(fecha_hora_str)  # ahora se convierte a formato datetime con el metodo strptime
             if fecha_actual>fec_venc and eleccion==None:
                 print("ha ingresado una fecha anterior a la fecha actual")
