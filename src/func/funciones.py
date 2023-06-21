@@ -62,7 +62,7 @@ def buscar_tarea(variable, opcion):
             algo=result.fetchall()
             return algo
         case "2":
-            result=conexion.execute("SELECT * FROM tareas WHERE fec_ven=?", (variable, ))
+            result=conexion.execute("SELECT * FROM tareas WHERE fec_ven BETWEEN ? AND ?", (variable[0], variable[1] ))
             algo=result.fetchall()
             return algo
         case "3":
@@ -80,21 +80,40 @@ def todas():
     else:
         return None
 
-def convertir(fec_venc):   # convierto la variable fec_venc a datetime, a menos que ya sea 
+def convertir(fec_venc,eleccion=None):   # convierto la variable fec_venc a datetime, a menos que ya sea 
     if type(fec_venc) != datetime: 
-        vence = datetime.strptime(fec_venc, "%Y-%m-%d %H:%M:%S")
+        
+        if eleccion=="2":
+            vence = datetime.strptime(fec_venc[0], "%Y-%m-%d %H:%M:%S")
+            vence1 = datetime.strptime(fec_venc[1], "%Y-%m-%d %H:%M:%S")
+            return vence, vence1
+        else:
+            vence = datetime.strptime(fec_venc, "%Y-%m-%d %H:%M:%S")
     else:
         vence = fec_venc
     return vence
 # funcion para ingresar las fechas en las distintas opciones
 def fecha_vencimiento(eleccion=None): # eleccion=None lo use porque hay veces que mando un parametro y otras veces no
     while(True):
+        fecha_actual = datetime.now()
         try:
             dia=int(input("ingrese dia en formato DD: "))
             mes=int(input("ingrese mes en formato MM: "))
             anio=int(input("ingrese año en formato YYYY: "))    # ingreso la fecha para luego convertirla a formato datetime
-            fecha_hora_str=f"{anio}-{mes}-{dia} 00:00:00"  # todo lo que ingrese, lo transformo a string
-            fec_venc=convertir(fecha_hora_str)  # ahora se convierte a formato datetime con el metodo strptime
+            if eleccion=="2":
+                fecha_hora_str2=f"{anio}-{mes}-{dia} 00:00:00"  # todo lo que ingrese, lo transformo a string
+                fecha_hora_str1=f"{anio}-{mes}-{dia} 23:59:59"
+                fecha_hora_str=fecha_hora_str2,fecha_hora_str1
+                fec_venc=convertir(fecha_hora_str,eleccion)
+                if fecha_actual>fec_venc[0] and eleccion==None:
+                    print("ha ingresado una fecha anterior a la fecha actual")
+                else:
+                    break
+            else:
+                hora=int(input("ingrese hora: "))
+                minutos=int(input("ingrese minutos: "))
+                fecha_hora_str=f"{anio}-{mes}-{dia} {hora}:{minutos}:00"
+                fec_venc=convertir(fecha_hora_str,eleccion)  # ahora se convierte a formato datetime con el metodo strptime
             if fecha_actual>fec_venc and eleccion==None:
                 print("ha ingresado una fecha anterior a la fecha actual")
             else:
