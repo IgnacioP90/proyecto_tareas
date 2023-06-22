@@ -82,7 +82,7 @@ def todas():
 
 def convertir(fec_venc,eleccion=None):   # convierto la variable fec_venc a datetime, a menos que ya sea 
     if type(fec_venc) != datetime: 
-        
+        vence1=None
         if eleccion=="2":
             vence = datetime.strptime(fec_venc[0], "%Y-%m-%d %H:%M:%S")
             vence1 = datetime.strptime(fec_venc[1], "%Y-%m-%d %H:%M:%S")
@@ -105,16 +105,13 @@ def fecha_vencimiento(eleccion=None): # eleccion=None lo use porque hay veces qu
                 fecha_hora_str1=f"{anio}-{mes}-{dia} 23:59:59"
                 fecha_hora_str=fecha_hora_str2,fecha_hora_str1
                 fec_venc=convertir(fecha_hora_str,eleccion)
-                if fecha_actual>fec_venc[0] and eleccion==None:
-                    print("ha ingresado una fecha anterior a la fecha actual")
-                else:
-                    break
+                break
             else:
                 hora=int(input("ingrese hora: "))
                 minutos=int(input("ingrese minutos: "))
                 fecha_hora_str=f"{anio}-{mes}-{dia} {hora}:{minutos}:00"
                 fec_venc=convertir(fecha_hora_str,eleccion)  # ahora se convierte a formato datetime con el metodo strptime
-            if fecha_actual>fec_venc and eleccion==None:
+            if fec_venc<=fecha_actual and eleccion==None:
                 print("ha ingresado una fecha anterior a la fecha actual")
             else:
                 break
@@ -123,6 +120,7 @@ def fecha_vencimiento(eleccion=None): # eleccion=None lo use porque hay veces qu
     return fec_venc
 # actualiza las tareas, cuando la fecha de vencimiento de la tarea, sobrepasa a la tarea actual, cada una de ellas tendra el estado a vencida, estando en estado pendiente
 def actualizar(fecha_actual):
+    
     try:
         conexion.execute("SELECT limite FROM tareas")
     except sqlite3.OperationalError:
@@ -144,7 +142,7 @@ def actualizar(fecha_actual):
             conexion.execute("UPDATE tareas SET estado='vencida' WHERE titulo=? and fec_ven=?", (stat[0], fecha))
             conexion.commit()
                 
-        if limit>=fecha_actual and stat[1]=='vencida':
+        if limit>=fecha_actual and stat[2]=='vencida':
             conexion.execute("UPDATE tareas SET estado='pendiente' WHERE titulo=? and fec_ven=?", (stat[0], fecha))
             conexion.commit()
             
@@ -166,6 +164,7 @@ def vencimientos():
     c=[]
     d=[]
     actualizar(fecha_actual)
+   
     todo=todas()
     if todo:
         for tareas in todo:
@@ -175,10 +174,17 @@ def vencimientos():
             tareas_por_vencer=vencidas.days*24+vencidas.seconds // 3600 # convierto la fecha en numeros, el equivalente a las horas.
             dias=vencidas.days
             horas=vencidas.seconds//3600
+            minutos=dias * 24 * 60 + vencidas.seconds // 60  % 60
+            print(vencidas)       
+            print(minutos) 
             if(dias==0):
-                total=f"{horas} hs"
+                total=f"{horas} hs y {minutos} minutos"
             else:
-                total=f"{dias} dias {horas} hs"
+                minutos=minutos%60
+                if(horas==0):
+                    total=f"{dias} dias y {minutos} minutos"
+                else:
+                    total=f"{dias} dias {horas} hs y {minutos} minutos"
             if(tareas[4] == 'vencida'):
                 a+=1    
             if(tareas_por_vencer<=168 and tareas[4] == 'pendiente'):

@@ -10,7 +10,6 @@ from src.options.todas import opcion_7
 from src.options.eliminar import opcion_8
 def main():
     while True:
-        
         actualizar(fecha_actual)
         try:
             vencen = vencimientos()
