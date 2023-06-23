@@ -174,9 +174,7 @@ def vencimientos():
             tareas_por_vencer=vencidas.days*24+vencidas.seconds // 3600 # convierto la fecha en numeros, el equivalente a las horas.
             dias=vencidas.days
             horas=vencidas.seconds//3600
-            minutos=dias * 24 * 60 + vencidas.seconds // 60  % 60
-            print(vencidas)       
-            print(minutos) 
+            minutos=dias * 24 * 60 + vencidas.seconds // 60  % 60 
             if(dias==0):
                 total=f"{horas} hs y {minutos} minutos"
             else:

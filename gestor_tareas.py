@@ -1,13 +1,6 @@
 from src.bd_connect import *
 from src.func.funciones import *
-from src.options.agregar import opcion_1
-from src.options.buscar import opcion_2
-from src.options.editar import opcion_3
-from src.options.completar import opcion_4
-from src.options.pendientes import opcion_5
-from src.options.completas import opcion_6
-from src.options.todas import opcion_7
-from src.options.eliminar import opcion_8
+from src.options.opt import *
 def main():
     while True:
         actualizar(fecha_actual)
@@ -76,8 +69,8 @@ def main():
                                 print("--------------------------------------------")
             # flujo para editar una tarea     
             case "3":
-                error=opcion_7()
-                if error:
+                ok=opcion_7()
+                if ok:
                     try:
                         titulo=title()
                         print("")
@@ -100,7 +93,11 @@ def main():
                     except ValueError:
                         print("---------------------")
                         print("|No existe la tarea.|")
-                        print("---------------------")      
+                        print("---------------------") 
+                    except UnboundLocalError:
+                        print("------------------------------")
+                        print("|No selecciono ninguna opcion|")
+                        print("------------------------------")     
             #flujo para marcar una tarea como completa
             case "4":
                 try:
