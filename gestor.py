@@ -1,10 +1,12 @@
-from src.func.funciones import *
+import os
+
 import PyQt5
+from src.func.funciones import *
 import sys
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow, QApplication, \
     QAbstractItemView, QTableWidgetItem, QGraphicsView, QGraphicsScene, QGraphicsTextItem, QMenu, QSystemTrayIcon
-from PyQt5.QtCore import QDate, QTimer, Qt, QTime
+from PyQt5.QtCore import QDate, QTimer, Qt, QTime, QCoreApplication
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5 import QtCore, QtWidgets
 
@@ -40,7 +42,7 @@ class Gui(QMainWindow):
         self.setWindowOpacity(1)
 
 
-        self.gripSize = 5
+        self.gripSize = 10
         self.grip = QtWidgets.QSizeGrip(self)
         self.grip.resize(self.gripSize, self.gripSize)
 
@@ -258,13 +260,16 @@ class Gui(QMainWindow):
             self.text_item.setPlainText(mensaje[0])
             self.timer = QTimer(self)
             self.timer.timeout.connect(self.scroll_text)
-            if (mensaje[1]>0):
-                icon = QIcon("icono.ico")
+            print(mensaje[1])
+            if mensaje[1]>0:
+                app_path = os.path.dirname(os.path.abspath(__file__)) # ruta actual donde se ejecuta el programa
+                icon = QIcon(app_path + "/app.ico")
+                print(app_path + "/app.ico")
                 tray_icon = QSystemTrayIcon(icon, app)
                 menu = QMenu()
                 tray_icon.setContextMenu(menu)
                 tray_icon.show()
-                tray_icon.showMessage("Gestor de tareas", f"""tienes {mensaje[1]} tarea/s que vence/n en un dia""",QSystemTrayIcon.Information, 5000)
+                tray_icon.showMessage("Gestor de tareas", f"tienes {mensaje[1]} tarea/s que vence/n en un dia", QSystemTrayIcon.Information, 5000)
 
     def scroll_text(self):
         pos_y = self.text_item.pos().y()

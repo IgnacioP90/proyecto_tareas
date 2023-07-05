@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1044</width>
+    <width>800</width>
     <height>600</height>
    </rect>
   </property>
@@ -354,10 +354,57 @@ QLabel
 </string>
                           </property>
                           <property name="currentIndex">
-                           <number>1</number>
+                           <number>5</number>
                           </property>
                           <widget class="QWidget" name="page">
                            <layout class="QGridLayout" name="gridLayout_3">
+                            <item row="1" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_9">
+                              <item>
+                               <widget class="QLabel" name="AgregarTitulolbl">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>50</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Titulo</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="AgregarDescripcionlbl">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>90</width>
+                                  <height>20</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Descripcion</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="7" column="0">
+                             <layout class="QGridLayout" name="gridLayout_12">
+                              <item row="0" column="0">
+                               <widget class="QPushButton" name="BotonAgregarT">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>30</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Agregar</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
                             <item row="2" column="0">
                              <layout class="QHBoxLayout" name="horizontalLayout_8">
                               <item>
@@ -400,122 +447,6 @@ selection-background-color: rgb(85, 85, 255);</string>
                               </item>
                              </layout>
                             </item>
-                            <item row="7" column="0">
-                             <layout class="QGridLayout" name="gridLayout_12">
-                              <item row="0" column="0">
-                               <widget class="QPushButton" name="BotonAgregarT">
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>80</width>
-                                  <height>30</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>Agregar</string>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                            <item row="1" column="0">
-                             <layout class="QHBoxLayout" name="horizontalLayout_9">
-                              <item>
-                               <widget class="QLabel" name="AgregarTitulolbl">
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>50</width>
-                                  <height>16777215</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>Titulo</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QLabel" name="AgregarDescripcionlbl">
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>90</width>
-                                  <height>20</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>Descripcion</string>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                            <item row="5" column="0">
-                             <layout class="QHBoxLayout" name="horizontalLayout_12">
-                              <item>
-                               <widget class="QLabel" name="Priorilbl">
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>80</width>
-                                  <height>16777215</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>Prioridad</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QComboBox" name="PrioridadAgregar">
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>50</width>
-                                  <height>16777215</height>
-                                 </size>
-                                </property>
-                                <item>
-                                 <property name="text">
-                                  <string>BAJA</string>
-                                 </property>
-                                </item>
-                                <item>
-                                 <property name="text">
-                                  <string>MEDIA</string>
-                                 </property>
-                                </item>
-                                <item>
-                                 <property name="text">
-                                  <string>ALTA</string>
-                                 </property>
-                                </item>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                            <item row="0" column="0">
-                             <layout class="QHBoxLayout" name="horizontalLayout_10">
-                              <item>
-                               <widget class="QLabel" name="TextoLabel">
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>550</width>
-                                  <height>30</height>
-                                 </size>
-                                </property>
-                                <property name="styleSheet">
-                                 <string notr="true">QLabel
-{
-	
-	font: 75 14pt &quot;Comic Sans MS&quot;;
-}</string>
-                                </property>
-                                <property name="text">
-                                 <string>Agregue una tarea por favor</string>
-                                </property>
-                                <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
                             <item row="6" column="0">
                              <layout class="QHBoxLayout" name="horizontalLayout_13">
                               <item>
@@ -535,7 +466,7 @@ selection-background-color: rgb(85, 85, 255);</string>
                                <widget class="QComboBox" name="DiasExtraAgregar">
                                 <property name="maximumSize">
                                  <size>
-                                  <width>50</width>
+                                  <width>70</width>
                                   <height>16777215</height>
                                  </size>
                                 </property>
@@ -583,6 +514,33 @@ selection-background-color: rgb(85, 85, 255);</string>
                               </item>
                              </layout>
                             </item>
+                            <item row="0" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_10">
+                              <item>
+                               <widget class="QLabel" name="TextoLabel">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>550</width>
+                                  <height>30</height>
+                                 </size>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">QLabel
+{
+	
+	font: 75 14pt &quot;Comic Sans MS&quot;;
+}</string>
+                                </property>
+                                <property name="text">
+                                 <string>Agregue una tarea por favor</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
                             <item row="4" column="0">
                              <layout class="QHBoxLayout" name="horizontalLayout_11">
                               <item>
@@ -602,10 +560,52 @@ selection-background-color: rgb(85, 85, 255);</string>
                                <widget class="QTimeEdit" name="HyMedit">
                                 <property name="maximumSize">
                                  <size>
-                                  <width>50</width>
+                                  <width>70</width>
                                   <height>16777215</height>
                                  </size>
                                 </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="5" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_12">
+                              <item>
+                               <widget class="QLabel" name="Priorilbl">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Prioridad</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QComboBox" name="PrioridadAgregar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>70</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <item>
+                                 <property name="text">
+                                  <string>BAJA</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>MEDIA</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>ALTA</string>
+                                 </property>
+                                </item>
                                </widget>
                               </item>
                              </layout>
@@ -772,7 +772,7 @@ selection-background-color: rgb(85, 85, 255);</string>
                                <widget class="QComboBox" name="PrioridadBuscar">
                                 <property name="maximumSize">
                                  <size>
-                                  <width>50</width>
+                                  <width>70</width>
                                   <height>16777215</height>
                                  </size>
                                 </property>
@@ -955,7 +955,7 @@ selection-background-color: rgb(85, 85, 255);</string>
                                <widget class="QComboBox" name="PrioridadEdit">
                                 <property name="maximumSize">
                                  <size>
-                                  <width>60</width>
+                                  <width>70</width>
                                   <height>16777215</height>
                                  </size>
                                 </property>

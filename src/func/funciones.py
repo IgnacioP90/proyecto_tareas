@@ -1,5 +1,6 @@
-from ..bd_connect import *
 from datetime import *
+
+from ..bd_connect import *
 
 fecha_actual = datetime.now()
 def agregar_tarea(titulo, desc, fec_venc, prioridad, numero):
