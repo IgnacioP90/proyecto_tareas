@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
@@ -1173,7 +1176,7 @@ QTableView::item:selected
 	background-color: rgb(33, 47, 255);
 	color: #FFFFFF; 
 }
-QHeaderView::section:checked { background-color: transparent; }
+QTableView::section:first { background-color: transparent; }
 </string>
                               </property>
                               <column>

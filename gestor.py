@@ -40,14 +40,17 @@ class Gui(QMainWindow):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setWindowOpacity(1)
 
-        self.gripSize = 10
+
+        self.gripSize = 5
         self.grip = QtWidgets.QSizeGrip(self)
         self.grip.resize(self.gripSize, self.gripSize)
+
         self.frame_superior.mouseMoveEvent = self.mover_ventana
         self.frame_superior.mousePressEvent = self.guardar_posicion_clic
         self.stackedWidget.setCurrentWidget(self.page)
         self.BotonAgregarT.clicked.connect(self.obtener_datos)
         self.Agregar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page))
+        self.Agregar.clicked.connect(lambda: self.LabelMsj.hide())
         self.Buscar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_2))
         self.Editar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_3))
         self.Eliminar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_6))
@@ -142,7 +145,7 @@ class Gui(QMainWindow):
             self.actualizarTareas()
         else:
             mensaje = 'no hay tareas'
-            self.text_item.setPlainText(mensaje)  # Asignar el texto al QGraphicsTextItem
+            self.text_item.setPlainText(mensaje)  # Asignar el texto al QGraphicsTextItem creado mas arriba
             self.timer = QTimer(self)
             self.timer.timeout.connect(self.scroll_text)
 
@@ -167,7 +170,8 @@ class Gui(QMainWindow):
             self.LabelMsj.setText('Tarea eliminada correctamente')
             self.LabelMsj.show()
             res = todas()
-            self.imprimir_tuplas(res)
+            if res:
+                self.imprimir_tuplas(res)
         except ValueError:
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No se elimino la tarea porque no existe')
@@ -176,7 +180,6 @@ class Gui(QMainWindow):
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No existen tareas')
             self.LabelMsj.show()
-
 
     def cambioTextoEliminar(self):
         text=self.TituloEliminar.text()
@@ -231,7 +234,7 @@ class Gui(QMainWindow):
                 completa=completar_tarea(text)
                 self.imprimir_tuplas(completa)
                 self.LabelMsj.setStyleSheet('color:blue; border:0px')
-                self.LabelMsj.setText('Se mostrara la tarea completa')
+                self.LabelMsj.setText('Se mostrara la tarea a completar')
                 self.LabelMsj.show()
             elif result[4]=='completa':
                 self.LabelMsj.setStyleSheet('color:green; border:0px')
@@ -245,7 +248,7 @@ class Gui(QMainWindow):
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No hay tareas para completar')
             self.LabelMsj.show()
-        except Exception as e:
+        except Exception:
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No existen tareas')
             self.LabelMsj.show()
@@ -253,12 +256,11 @@ class Gui(QMainWindow):
     def actualizarTareas(self):
             vencen = vencimientos()
             mensaje = mostrar_vencidas(vencen[0], vencen[1], vencen[2], vencen[3])
-            self.text_item.setPlainText(mensaje[0])  # Asignar el texto al QGraphicsTextItem
+            self.text_item.setPlainText(mensaje[0])
             self.timer = QTimer(self)
             self.timer.timeout.connect(self.scroll_text)
             if (mensaje[1]>0):
                 icon = QIcon("icono.ico")
-                # Crea un objeto QSystemTrayIcon
                 tray_icon = QSystemTrayIcon(icon, app)
                 menu = QMenu()
                 tray_icon.setContextMenu(menu)
@@ -355,7 +357,7 @@ class Gui(QMainWindow):
                 self.LabelMsj.setText('No se puede editar una tarea completa')
                 self.LabelMsj.show()
                 return
-                # La tarea está en estado 'completa', realizar alguna acción adecuada.
+                # La tarea está en estado 'completa'.
 
             elif variable == 2:
                 res = todas()
@@ -364,7 +366,7 @@ class Gui(QMainWindow):
                 self.LabelMsj.setText('La tarea no existe')
                 self.LabelMsj.show()
                 return
-                # La tarea no existe, realizar alguna acción adecuada.
+                # La tarea no existe.
 
             if variable != 1 and variable != 2:
                 self.tableWidgetBuscar.clearContents()
@@ -375,7 +377,7 @@ class Gui(QMainWindow):
                 self.LabelMsj.setText('La tarea se edito correctamente')
                 self.LabelMsj.show()
 
-            # Realizar acciones adicionales según sea necesario después de la edición.
+            # la tarea se edito sin errores.
 
         except sqlite3.IntegrityError:
             self.tableWidgetBuscar.clearContents()
@@ -488,12 +490,12 @@ class Gui(QMainWindow):
             self.tableWidgetBuscar.setColumnCount(5)  # Establecer el número de columnas
             if isinstance(tupla,tuple):
                 self.tableWidgetBuscar.setRowCount(1)  # Establecer el número de filas
-                datos = tupla  # Obtener la única fila de la tupla
+                datos = tupla  # Obtengo la única fila de la tupla
                 for columna, dato in enumerate(datos):
                     item = QTableWidgetItem(str(dato))
                     self.tableWidgetBuscar.setItem(0, columna, item)
             else:
-                self.tableWidgetBuscar.setRowCount(len(tupla))  # Establecer el número de filas
+                self.tableWidgetBuscar.setRowCount(len(tupla))
                 for fila, datos in enumerate(tupla):
                     for columna, dato in enumerate(datos):
                         item = QTableWidgetItem(str(dato))
@@ -632,7 +634,6 @@ class Gui(QMainWindow):
         self.TituloEdit_2.setMaxLength(20)
         self.DescripcionEdit.setPlaceholderText("Ingrese una descripcion")
         self.DescripcionEdit.setMaxLength(20)
-
 
     def cerrarBd(self):
         conexion.close()

@@ -19,7 +19,6 @@ def completar_tarea(titulo):
     else:
         return None
 
-
 def tareas_pendientes():
     result = conexion.execute("SELECT * FROM tareas WHERE estado='pendiente'")
     resultado = result.fetchall()
@@ -27,7 +26,6 @@ def tareas_pendientes():
         return resultado
     else:
         return None
-
 
 def editar_tarea(titulo, variable, opcion):
     # selecciono la fila que tenga el mismo titulo que traje a la funcion, luego pregunto si esta en estado pendiente y ahi si la edito,
@@ -52,7 +50,6 @@ def editar_tarea(titulo, variable, opcion):
     else:
         return 1  # retorno una bandera para hacer una comprobacion
 
-
 def tareas_completas():
     result = conexion.execute("SELECT * FROM tareas WHERE estado='completa'")
     resultado = result.fetchall()
@@ -60,7 +57,6 @@ def tareas_completas():
         return resultado
     else:
         return None
-
 
 def buscar_tarea(variable, opcion):
     algo = None
@@ -79,6 +75,7 @@ def buscar_tarea(variable, opcion):
             return algo
     if not algo:
         return None
+
 def busqueda(texto):
     res = conexion.execute("SELECT * FROM tareas WHERE titulo=?", (texto,))
     result = res.fetchone()
@@ -87,8 +84,6 @@ def busqueda(texto):
     else:
         return None
 
-
-
 def todas():
     result = conexion.execute("SELECT * FROM tareas")
     resultado = result.fetchall()
@@ -96,7 +91,6 @@ def todas():
         return resultado
     else:
         return None
-
 
 def convertir(fec_venc, eleccion=None):  # convierto la variable fec_venc a datetime, a menos que ya sea
     if type(fec_venc) != datetime:
@@ -110,7 +104,6 @@ def convertir(fec_venc, eleccion=None):  # convierto la variable fec_venc a date
     else:
         vence = fec_venc
     return vence
-
 
 # funcion para ingresar las fechas en las distintas opciones
 def fecha_vencimiento(fecha, hym,eleccion=None):  # eleccion=None lo use porque hay veces que mando un parametro y otras veces no
@@ -134,7 +127,6 @@ def fecha_vencimiento(fecha, hym,eleccion=None):  # eleccion=None lo use porque 
             raise TypeError
 
     return fec_venc
-
 
 # actualiza las tareas, cuando la fecha de vencimiento de la tarea, sobrepasa a la tarea actual, cada una de ellas tendra el estado a vencida, estando en estado pendiente
 def actualizar(fecha_actual):
@@ -162,11 +154,6 @@ def actualizar(fecha_actual):
         if limit >= fecha_actual and stat[2] == 'vencida':
             conexion.execute("UPDATE tareas SET estado='pendiente' WHERE titulo=? and fec_ven=?", (stat[0], fecha))
             conexion.commit()
-
-
-
-
-
 
 def vencimientos():
     a = 0
@@ -207,17 +194,12 @@ def delete(titulo):
     if resultado:
         conexion.execute("DELETE FROM tareas WHERE titulo=?", (titulo,))
         conexion.commit()
-    else:
-        raise ValueError
-
-
 
 def cantidad_dias(fec_venc, limite):
     if limite == 0:
         return fec_venc
     dias = fec_venc + timedelta(days=limite)
     return dias
-
 
 def mostrar_vencidas(vencidas=None, vencen_1=None, titulos=None, vencen=None):
     mensaje = ""
