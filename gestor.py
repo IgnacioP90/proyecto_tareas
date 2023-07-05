@@ -1,4 +1,3 @@
-import sqlite3
 from src.func.funciones import *
 import PyQt5
 import sys
