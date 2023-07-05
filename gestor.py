@@ -4,9 +4,9 @@ import PyQt5
 import sys
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow, QApplication, \
-    QAbstractItemView, QTableWidgetItem, QGraphicsView, QGraphicsScene, QGraphicsTextItem
+    QAbstractItemView, QTableWidgetItem, QGraphicsView, QGraphicsScene, QGraphicsTextItem, QMenu, QSystemTrayIcon
 from PyQt5.QtCore import QDate, QTimer, Qt, QTime
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 from PyQt5 import QtCore, QtWidgets
 
 class Gui(QMainWindow):
@@ -103,6 +103,8 @@ class Gui(QMainWindow):
         self.BotonAgregarT.clicked.connect(self.comprobarTareas)
         self.BotonEditarT.clicked.connect(self.comprobarTareas)
         self.Todas.clicked.connect(self.verTodo)
+        self.tableWidgetBuscar.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.BotonBuscarT.clicked.connect(self.buscar)
 
         self.graphics_view = QGraphicsView(self.frame_8)
         self.graphics_view.setGeometry(0, 0, 400, 120)
@@ -182,6 +184,7 @@ class Gui(QMainWindow):
             self.BotonEliminarT.setEnabled(True)
         else:
             self.BotonEliminarT.setEnabled(False)
+
     def eliminarT(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
@@ -193,6 +196,7 @@ class Gui(QMainWindow):
             self.LabelMsj.setText('No existen tareas')
             self.LabelMsj.show()
         self.BotonEliminarT.setEnabled(False)
+
     def verBuscar(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
@@ -204,6 +208,7 @@ class Gui(QMainWindow):
             self.LabelMsj.setText('No existen tareas')
             self.LabelMsj.show()
         self.BotonBuscarT.setEnabled(False)
+
     def menuCompletar(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
@@ -215,6 +220,7 @@ class Gui(QMainWindow):
             self.LabelMsj.setText('No existen tareas')
             self.LabelMsj.show()
         self.BotonCompletarT.setEnabled(False)
+
     def completarLasT(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
@@ -243,12 +249,21 @@ class Gui(QMainWindow):
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No existen tareas')
             self.LabelMsj.show()
+
     def actualizarTareas(self):
             vencen = vencimientos()
             mensaje = mostrar_vencidas(vencen[0], vencen[1], vencen[2], vencen[3])
-            self.text_item.setPlainText(mensaje)  # Asignar el texto al QGraphicsTextItem
+            self.text_item.setPlainText(mensaje[0])  # Asignar el texto al QGraphicsTextItem
             self.timer = QTimer(self)
             self.timer.timeout.connect(self.scroll_text)
+            if (mensaje[1]>0):
+                icon = QIcon("icono.ico")
+                # Crea un objeto QSystemTrayIcon
+                tray_icon = QSystemTrayIcon(icon, app)
+                menu = QMenu()
+                tray_icon.setContextMenu(menu)
+                tray_icon.show()
+                tray_icon.showMessage("Gestor de tareas", f"""tienes {mensaje[1]} tarea/s que vence/n en un dia""",QSystemTrayIcon.Information, 5000)
 
     def scroll_text(self):
         pos_y = self.text_item.pos().y()
@@ -417,6 +432,7 @@ class Gui(QMainWindow):
         self.DescripcionEdit.hide()
         self.calendarWidgetEditar.hide()
         self.TimeEditar.hide()
+
     def ocultar(self):
         self.TituloBuscar.hide()
         self.PrioridadBuscar.hide()
@@ -446,14 +462,12 @@ class Gui(QMainWindow):
             self.LabelMsj.setText('La/s tarea/s no existe/n')
             self.LabelMsj.show()
 
-
     def cambiarBotonB(self):
         texto = self.TituloBuscar.text()
         if texto:
             self.BotonBuscarT.setEnabled(True)
         else:
             self.BotonBuscarT.setEnabled(False)
-
 
     def mostrarTodo(self):
         self.tableWidgetBuscar.clearContents()
@@ -468,14 +482,10 @@ class Gui(QMainWindow):
             self.LabelMsj.show()
 
     def imprimir_tuplas(self, tupla):
-
         if tupla:
             self.LabelMsj.hide()
             self.tableWidgetBuscar.clearContents()
             self.tableWidgetBuscar.setColumnCount(5)  # Establecer el número de columnas
-            header_labels = ["Título", "Descripción", "Vencimiento", "Prioridad", "Estado"]
-            self.tableWidgetBuscar.setHorizontalHeaderLabels(header_labels)
-
             if isinstance(tupla,tuple):
                 self.tableWidgetBuscar.setRowCount(1)  # Establecer el número de filas
                 datos = tupla  # Obtener la única fila de la tupla
@@ -488,7 +498,6 @@ class Gui(QMainWindow):
                     for columna, dato in enumerate(datos):
                         item = QTableWidgetItem(str(dato))
                         self.tableWidgetBuscar.setItem(fila, columna, item)
-
             self.tableWidgetBuscar.show()
         else:
             raise ValueError

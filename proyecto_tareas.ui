@@ -1157,7 +1157,24 @@ QLabel
                             <item>
                              <widget class="QTableWidget" name="tableWidgetBuscar">
                               <property name="styleSheet">
-                               <string notr="true">font: 10pt &quot;Comic Sans MS&quot;;</string>
+                               <string notr="true">QTable
+{
+	font: 10pt &quot;Comic Sans MS&quot;;
+}
+QHeaderView::section 
+{
+	font: 10pt &quot;Comic Sans MS&quot;;
+	border: 1px solid #000000;
+	border-radius: 5px;
+	background-color: #CCCCCC; color: blue; 
+}
+QTableView::item:selected 
+{ 
+	background-color: rgb(33, 47, 255);
+	color: #FFFFFF; 
+}
+QHeaderView::section:checked { background-color: transparent; }
+</string>
                               </property>
                               <column>
                                <property name="text">

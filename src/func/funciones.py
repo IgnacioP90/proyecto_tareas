@@ -229,4 +229,4 @@ def mostrar_vencidas(vencidas=None, vencen_1=None, titulos=None, vencen=None):
     mensaje += "Nombre de la(s) tarea(s) que vencerá(n) en una semana:\n"
     for titulo, vencimiento in zip(titulos, vencen):
         mensaje += f" Titulo: {titulo} - Vence en: {vencimiento}\n"
-    return mensaje
+    return mensaje, vencen_1
