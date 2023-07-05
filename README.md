@@ -4,7 +4,8 @@ Este proyecto Gestor de Tareas es una aplicación que permite al usuario adminis
 
 ## Requisitos
 
-- Python 3.x
+- Python 3.10 o superior
+- PyQt5
 
 ## Instalación
 
@@ -24,6 +25,6 @@ Una vez que hayas instalado y ejecutado el proyecto, puedes seguir estos pasos p
 
 ## Contribución
 
-¡Las contribuciones son bienvenidas! Si deseas contribuir a este proyecto, puedes hacerlo con total libertad, esta en fase de desarrollo, lo ideal es que sea una aplicacion con interfaz grafica.
+¡Las contribuciones son bienvenidas! Si deseas contribuir a este proyecto, puedes hacerlo con total libertad, actualmente se creo la interfaz con Pyqt5.
 
 

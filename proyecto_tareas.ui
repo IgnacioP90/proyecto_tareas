@@ -1,0 +1,1428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1044</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>600</width>
+     <height>500</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_7">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QFrame" name="frame">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777214</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame
+{
+	background-color: rgb(45, 45, 45);
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_19">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="1" column="0">
+        <widget class="QFrame" name="frame_inferior">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="frame_2">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QFrame" name="frameMenu">
+               <property name="maximumSize">
+                <size>
+                 <width>80</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QFrame
+{
+	border-radius:5px;
+	background-color: rgb(45, 45, 45);
+}
+QPushButton
+{
+	border-radius:7px;
+	color:white;
+	border:1px solid white;
+	font: 75 8pt &quot;Comic Sans MS&quot;;
+}
+QPushButton:hover
+{
+	border-radius:7px;
+	background-color: rgb(85, 116, 255);
+	font: 75 9pt &quot;Comic Sans MS&quot;;
+}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="lineWidth">
+                <number>1</number>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_11">
+                <property name="topMargin">
+                 <number>13</number>
+                </property>
+                <property name="rightMargin">
+                 <number>9</number>
+                </property>
+                <property name="verticalSpacing">
+                 <number>30</number>
+                </property>
+                <item row="7" column="0">
+                 <widget class="QPushButton" name="Todas">
+                  <property name="text">
+                   <string>Todas</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="Agregar">
+                  <property name="text">
+                   <string>Agregar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QPushButton" name="Buscar">
+                  <property name="text">
+                   <string>Buscar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QPushButton" name="Completas">
+                  <property name="text">
+                   <string>Completas</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="0">
+                 <widget class="QPushButton" name="Pendientes">
+                  <property name="text">
+                   <string>Pendientes</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QPushButton" name="Editar">
+                  <property name="text">
+                   <string>Editar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QPushButton" name="Eliminar">
+                  <property name="text">
+                   <string>Eliminar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QPushButton" name="Completar">
+                  <property name="text">
+                   <string>Completar</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_3">
+               <property name="styleSheet">
+                <string notr="true">QFrame
+{
+	background-color: rgb(153, 153, 153);
+	border-top-left-radius:4px;
+	border-bottom-left-radius:4px;
+}
+</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="midLineWidth">
+                <number>0</number>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+                <property name="leftMargin">
+                 <number>1</number>
+                </property>
+                <property name="topMargin">
+                 <number>1</number>
+                </property>
+                <property name="rightMargin">
+                 <number>1</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>1</number>
+                </property>
+                <item>
+                 <widget class="QFrame" name="frameOptions">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>ArrowCursor</cursorShape>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4,3">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QFrame" name="frame_5">
+                     <property name="styleSheet">
+                      <string notr="true">QPushButton
+{
+	border-radius:7px;
+}
+QPushButton:hover
+{
+	border-radius:5px;
+	background-color: rgb(76, 172, 255);
+	font: 12pt &quot;Comic Sans MS&quot;;
+}
+</string>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <property name="lineWidth">
+                      <number>0</number>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_7">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <layout class="QGridLayout" name="gridLayout_2">
+                        <item row="0" column="0">
+                         <widget class="QStackedWidget" name="stackedWidget">
+                          <property name="minimumSize">
+                           <size>
+                            <width>300</width>
+                            <height>300</height>
+                           </size>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">
+QLabel
+{
+	font: 11pt &quot;Comic Sans MS&quot;;
+}
+</string>
+                          </property>
+                          <property name="currentIndex">
+                           <number>1</number>
+                          </property>
+                          <widget class="QWidget" name="page">
+                           <layout class="QGridLayout" name="gridLayout_3">
+                            <item row="2" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_8">
+                              <item>
+                               <widget class="QLineEdit" name="TituloAgregar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>130</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLineEdit" name="DescripcionAgregar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>130</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="3" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_6">
+                              <item>
+                               <widget class="QCalendarWidget" name="calendarWidgetAgregar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>350</width>
+                                  <height>200</height>
+                                 </size>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">alternate-background-color: rgb(0, 85, 255);
+selection-background-color: rgb(85, 85, 255);</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="7" column="0">
+                             <layout class="QGridLayout" name="gridLayout_12">
+                              <item row="0" column="0">
+                               <widget class="QPushButton" name="BotonAgregarT">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>30</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Agregar</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="1" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_9">
+                              <item>
+                               <widget class="QLabel" name="AgregarTitulolbl">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>50</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Titulo</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="AgregarDescripcionlbl">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>90</width>
+                                  <height>20</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Descripcion</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="5" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_12">
+                              <item>
+                               <widget class="QLabel" name="Priorilbl">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Prioridad</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QComboBox" name="PrioridadAgregar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>50</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <item>
+                                 <property name="text">
+                                  <string>BAJA</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>MEDIA</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>ALTA</string>
+                                 </property>
+                                </item>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="0" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_10">
+                              <item>
+                               <widget class="QLabel" name="TextoLabel">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>550</width>
+                                  <height>30</height>
+                                 </size>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">QLabel
+{
+	
+	font: 75 14pt &quot;Comic Sans MS&quot;;
+}</string>
+                                </property>
+                                <property name="text">
+                                 <string>Agregue una tarea por favor</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="6" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_13">
+                              <item>
+                               <widget class="QLabel" name="DiasExtralbl">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Dias extra</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QComboBox" name="DiasExtraAgregar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>50</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <item>
+                                 <property name="text">
+                                  <string>0</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>1</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>2</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>3</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>4</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>5</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>6</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>7</string>
+                                 </property>
+                                </item>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="4" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_11">
+                              <item>
+                               <widget class="QLabel" name="HyMlbl">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>110</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Hora y minutos</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QTimeEdit" name="HyMedit">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>50</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                           </layout>
+                          </widget>
+                          <widget class="QWidget" name="page_5">
+                           <layout class="QGridLayout" name="gridLayout_6">
+                            <item row="1" column="0">
+                             <layout class="QFormLayout" name="formLayout_2">
+                              <property name="formAlignment">
+                               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                              </property>
+                              <item row="0" column="1">
+                               <widget class="QLineEdit" name="TituloCompletar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>120</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="0" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_16">
+                              <item>
+                               <widget class="QLabel" name="label_3">
+                                <property name="text">
+                                 <string>A continuacion, ingrese el titulo de la tarea a completar</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="2" column="0" rowspan="2">
+                             <layout class="QHBoxLayout" name="horizontalLayout_18">
+                              <item>
+                               <widget class="QPushButton" name="BotonCompletarT">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>100</width>
+                                  <height>50</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Completar</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                           </layout>
+                          </widget>
+                          <widget class="QWidget" name="page_4"/>
+                          <widget class="QWidget" name="page_6">
+                           <layout class="QGridLayout" name="gridLayout_10">
+                            <item row="0" column="0">
+                             <layout class="QHBoxLayout" name="horizontalLayout_17">
+                              <item>
+                               <widget class="QLabel" name="label_4">
+                                <property name="text">
+                                 <string>Ingrese el titulo de la tarea a eliminar</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="1" column="0">
+                             <layout class="QFormLayout" name="formLayout">
+                              <property name="formAlignment">
+                               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                              </property>
+                              <item row="0" column="1">
+                               <widget class="QLineEdit" name="TituloEliminar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>130</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item row="2" column="0">
+                             <layout class="QGridLayout" name="gridLayout_9">
+                              <item row="0" column="0">
+                               <widget class="QPushButton" name="BotonEliminarT">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>120</width>
+                                  <height>50</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Eliminar</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                           </layout>
+                          </widget>
+                          <widget class="QWidget" name="page_2">
+                           <layout class="QVBoxLayout" name="verticalLayout_6">
+                            <item>
+                             <widget class="QLabel" name="label">
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777205</width>
+                                <height>50</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>Por favor, seleccione una de las opciones a buscar</string>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <layout class="QHBoxLayout" name="horizontalLayout_14">
+                              <item>
+                               <widget class="QRadioButton" name="SelectTitulo">
+                                <property name="text">
+                                 <string>Titulo</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QRadioButton" name="SelectFechaVencimiento">
+                                <property name="text">
+                                 <string>Fecha de vencimiento</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QRadioButton" name="SelectPrioridad">
+                                <property name="text">
+                                 <string>Prioridad</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item>
+                             <layout class="QHBoxLayout" name="LayoutBuscar">
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
+                              <item>
+                               <widget class="QComboBox" name="PrioridadBuscar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>50</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <item>
+                                 <property name="text">
+                                  <string>BAJA</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>MEDIA</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>ALTA</string>
+                                 </property>
+                                </item>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLineEdit" name="TituloBuscar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>130</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QCalendarWidget" name="WidgetBuscar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>350</width>
+                                  <height>200</height>
+                                 </size>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">alternate-background-color: rgb(0, 85, 255);
+selection-background-color: rgb(85, 85, 255);</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item>
+                             <layout class="QGridLayout" name="gridLayout_17">
+                              <item row="0" column="0">
+                               <widget class="QPushButton" name="BotonBuscarT">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>90</width>
+                                  <height>50</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Buscar</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                           </layout>
+                          </widget>
+                          <widget class="QWidget" name="page_3">
+                           <layout class="QVBoxLayout" name="verticalLayout_2">
+                            <item>
+                             <widget class="QLabel" name="label_2">
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>50</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>Por favor, ingrese primero el titulo de la tarea que desea editar
+ luego, elija que editar</string>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <layout class="QHBoxLayout" name="horizontalLayout_22">
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
+                              <item>
+                               <widget class="QLineEdit" name="TituloEdit">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>130</width>
+                                  <height>20</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item>
+                             <layout class="QHBoxLayout" name="horizontalLayout_21">
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
+                              <property name="sizeConstraint">
+                               <enum>QLayout::SetDefaultConstraint</enum>
+                              </property>
+                              <item>
+                               <widget class="QRadioButton" name="TituloEditar">
+                                <property name="text">
+                                 <string>Titulo</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QRadioButton" name="DescripcionEditar">
+                                <property name="text">
+                                 <string>Descripcion</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QRadioButton" name="VencimientoEditar">
+                                <property name="text">
+                                 <string>Vencimiento</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QRadioButton" name="PrioridadEditar">
+                                <property name="text">
+                                 <string>Prioridad</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item>
+                             <layout class="QGridLayout" name="gridLayout_8">
+                              <item row="0" column="4">
+                               <widget class="QCalendarWidget" name="calendarWidgetEditar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>350</width>
+                                  <height>200</height>
+                                 </size>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">alternate-background-color: rgb(0, 85, 255);
+selection-background-color: rgb(85, 85, 255);</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="0" column="3">
+                               <widget class="QLineEdit" name="DescripcionEdit">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>130</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="1" column="4">
+                               <widget class="QTimeEdit" name="TimeEditar">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>70</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="0" column="1">
+                               <widget class="QComboBox" name="PrioridadEdit">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>60</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <item>
+                                 <property name="text">
+                                  <string>BAJA</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>MEDIA</string>
+                                 </property>
+                                </item>
+                                <item>
+                                 <property name="text">
+                                  <string>ALTA</string>
+                                 </property>
+                                </item>
+                               </widget>
+                              </item>
+                              <item row="0" column="2">
+                               <widget class="QLineEdit" name="TituloEdit_2">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>130</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                            <item>
+                             <layout class="QGridLayout" name="gridLayout_5">
+                              <item row="0" column="0">
+                               <widget class="QPushButton" name="BotonEditarT">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>90</width>
+                                  <height>50</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Editar</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                           </layout>
+                          </widget>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QFrame" name="frame_4">
+                     <property name="minimumSize">
+                      <size>
+                       <width>200</width>
+                       <height>300</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777212</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">
+QFrame
+{
+	border-left:1px solid black;
+	background-color: rgb(131, 131, 131);
+}
+QLabel
+{
+	border:0px
+}</string>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0">
+                      <property name="spacing">
+                       <number>2</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QFrame" name="frame_6">
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>16777207</height>
+                         </size>
+                        </property>
+                        <property name="sizeIncrement">
+                         <size>
+                          <width>0</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QFrame
+{
+	background-color: rgb(136, 136, 136);
+	border-radius:5px;
+	border:0px;
+}
+</string>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="2,10,1">
+                         <property name="spacing">
+                          <number>2</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QFrame" name="frame_8">
+                           <property name="maximumSize">
+                            <size>
+                             <width>16777215</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QFrame
+{
+	border-radius:5px;
+	background-color: rgb(121, 121, 121);
+}
+</string>
+                           </property>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
+                           </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_4">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QFrame" name="frame_9">
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
+                           </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_15">
+                            <item>
+                             <widget class="QTableWidget" name="tableWidgetBuscar">
+                              <property name="styleSheet">
+                               <string notr="true">font: 10pt &quot;Comic Sans MS&quot;;</string>
+                              </property>
+                              <column>
+                               <property name="text">
+                                <string>Titulo</string>
+                               </property>
+                              </column>
+                              <column>
+                               <property name="text">
+                                <string>Descripcion</string>
+                               </property>
+                              </column>
+                              <column>
+                               <property name="text">
+                                <string>Vencimiento</string>
+                               </property>
+                              </column>
+                              <column>
+                               <property name="text">
+                                <string>Prioridad</string>
+                               </property>
+                              </column>
+                              <column>
+                               <property name="text">
+                                <string>Estado</string>
+                               </property>
+                              </column>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QFrame" name="frame_7">
+                           <property name="styleSheet">
+                            <string notr="true">QFrame
+{
+	border:0px;
+	border-bottom:1px solid black;
+	border-top:1px solid black;
+}
+QLabel
+{
+	
+	font: 10pt &quot;Comic Sans MS&quot;;
+	border:0px
+}</string>
+                           </property>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
+                           </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QGridLayout" name="gridLayout">
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <item row="0" column="0">
+                             <widget class="QLabel" name="LabelMsj">
+                              <property name="maximumSize">
+                               <size>
+                                <width>500</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QFrame" name="frame_superior">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QFrame
+{
+	border-radius:5px;
+	background-color: rgb(45, 45, 45);
+}
+QPushButton
+{
+	background-color: rgb(45, 45, 45);
+	border-radius:5px;
+}
+QPushButton:hover
+{
+	background-color: rgb(53, 53, 79);
+	border-radius:5px;
+}
+</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="2,0,0,0,0,0">
+          <property name="topMargin">
+           <number>9</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="labelMenu">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Comic Sans MS</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Menu</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>543</width>
+              <height>17</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="MinimizeButton">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Imagenes/minimizar-removebg-preview.png</normaloff>Imagenes/minimizar-removebg-preview.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="MaximizeButton">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Imagenes/Sin_título1-removebg-preview.png</normaloff>Imagenes/Sin_título1-removebg-preview.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="NormalButton">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Imagenes/Sin_título-removebg-preview (1).png</normaloff>Imagenes/Sin_título-removebg-preview (1).png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="ExitButton">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Imagenes/cruz-removebg-preview.png</normaloff>Imagenes/cruz-removebg-preview.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
