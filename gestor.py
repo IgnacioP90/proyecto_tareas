@@ -264,7 +264,6 @@ class Gui(QMainWindow):
             if mensaje[1]>0:
                 app_path = os.path.dirname(os.path.abspath(__file__)) # ruta actual donde se ejecuta el programa
                 icon = QIcon(app_path + "/app.ico")
-                icon = QIcon(app_path + "/app.ico")
                 tray_icon = QSystemTrayIcon(icon, app)
                 menu = QMenu()
                 tray_icon.setContextMenu(menu)
