@@ -68,6 +68,7 @@ class Gui(QMainWindow):
 
         self.Editar.clicked.connect(lambda: self.BotonEditarT.setEnabled(False))
         self.Completar.clicked.connect(self.menuCompletar)
+        self.Completar.clicked.connect(self.comprobarTareasNoCompletas)
 
         self.TituloBuscar.textChanged.connect(self.cambiarBotonB)
         self.SelectFechaVencimiento.clicked.connect(lambda: self.BotonBuscarT.setEnabled(True))
@@ -157,6 +158,17 @@ class Gui(QMainWindow):
             self.HyMedit.setMinimumTime(QTime.currentTime())
         else:
             self.HyMedit.setMinimumTime(QTime(0,0))
+
+    def comprobarTareasNoCompletas(self):
+        res=solo_no_completas()
+        print(res)
+        if res:
+            self.imprimir_tuplas(res)
+        else:
+            mensaje = 'no hay tareas'
+            self.text_item.setPlainText(mensaje)  # Asignar el texto al QGraphicsTextItem creado mas arriba
+            self.timer = QTimer(self)
+            self.timer.timeout.connect(self.scroll_text)
 
     def comprobarTareas(self):
         res = todas()
