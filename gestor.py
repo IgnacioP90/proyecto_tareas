@@ -16,7 +16,7 @@ class Gui(QMainWindow):
         loadUi("proyecto_tareas.ui", self)
 
         fecha_actual = QDate.currentDate()
-        hora=QTime.currentTime()
+        hora=QTime.currentTime().addSecs(7200)
         self.tableWidgetBuscar.hide()
         self.LabelMsj.hide()
         self.limite_caja_texto()
@@ -164,10 +164,8 @@ class Gui(QMainWindow):
         if res:
             self.imprimir_tuplas(res)
         else:
-            mensaje = 'no hay tareas'
-            self.text_item.setPlainText(mensaje)  # Asignar el texto al QGraphicsTextItem creado mas arriba
-            self.timer = QTimer(self)
-            self.timer.timeout.connect(self.scroll_text)
+            self.tableWidgetBuscar.clearContents()
+            self.tableWidgetBuscar.show()
 
     def comprobarTareas(self):
         res = todas()
