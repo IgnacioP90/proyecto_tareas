@@ -19,8 +19,8 @@
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
-     <width>600</width>
-     <height>500</height>
+     <width>750</width>
+     <height>600</height>
     </size>
    </property>
    <property name="maximumSize">
@@ -354,7 +354,7 @@ QLabel
 </string>
                           </property>
                           <property name="currentIndex">
-                           <number>5</number>
+                           <number>4</number>
                           </property>
                           <widget class="QWidget" name="page">
                            <layout class="QGridLayout" name="gridLayout_3">
@@ -925,6 +925,9 @@ selection-background-color: rgb(85, 85, 255);</string>
                                 <property name="styleSheet">
                                  <string notr="true">alternate-background-color: rgb(0, 85, 255);
 selection-background-color: rgb(85, 85, 255);</string>
+                                </property>
+                                <property name="verticalHeaderFormat">
+                                 <enum>QCalendarWidget::ISOWeekNumbers</enum>
                                 </property>
                                </widget>
                               </item>
