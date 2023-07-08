@@ -161,7 +161,6 @@ class Gui(QMainWindow):
 
     def comprobarTareasNoCompletas(self):
         res=solo_no_completas()
-        print(res)
         if res:
             self.imprimir_tuplas(res)
         else:
