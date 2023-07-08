@@ -190,11 +190,13 @@ def vencimientos():
         return a, b, c, d
 
 def delete(titulo):
-    query = conexion.execute("SELECT * FROM tareas WHERE titulo=?", (titulo,))
-    resultado = query.fetchone()
+    resultado=busqueda(titulo)
     if resultado:
         conexion.execute("DELETE FROM tareas WHERE titulo=?", (titulo,))
         conexion.commit()
+        return 1
+    else:
+        return None
 
 def cantidad_dias(fec_venc, limite):
     if limite == 0:
@@ -213,3 +215,11 @@ def mostrar_vencidas(vencidas=None, vencen_1=None, titulos=None, vencen=None):
     for titulo, vencimiento in zip(titulos, vencen):
         mensaje += f" Titulo: {titulo} - Vence en: {vencimiento}\n"
     return mensaje, vencen_1
+
+def solo_no_completas():
+    query=conexion.execute("SELECT * FROM tareas WHERE estado='vencida' OR estado='pendiente'")
+    result=query.fetchall()
+    if result:
+        return result
+    else:
+        return None
