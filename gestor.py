@@ -1,5 +1,4 @@
 import os
-
 import PyQt5
 from src.func.funciones import *
 import sys
@@ -9,7 +8,6 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, \
 from PyQt5.QtCore import QDate, QTimer, Qt, QTime
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5 import QtCore, QtWidgets
-
 
 class Gui(QMainWindow):
     def __init__(self):
@@ -135,6 +133,11 @@ class Gui(QMainWindow):
         self.comprobarTareas()
 
         self.ExitButton.clicked.connect(self.cerrarBd)
+        app_path = os.path.dirname(os.path.abspath(__file__))  # ruta actual donde se ejecuta el programa
+        icon = QIcon(app_path + "/app.ico")
+        self.tray_icon = QSystemTrayIcon(icon, app)
+        menu = QMenu()
+        self.tray_icon.setContextMenu(menu)
         self.notificacion()
         self.BotonAgregarT.clicked.connect(self.notificacion)
 
@@ -142,17 +145,9 @@ class Gui(QMainWindow):
         res = todas()
         if res:
             e = self.actualizarTareas()
-            if (e > 0):
-                app_path = os.path.dirname(os.path.abspath(__file__))  # ruta actual donde se ejecuta el programa
-                icon = QIcon(f"""{app_path}/app.ico""")
-                tray_icon = QSystemTrayIcon(icon, app)
-                menu = QMenu()
-                tray_icon.setContextMenu(menu)
-                tray_icon.show()
-                tray_icon.showMessage("Gestor de tareas", f"tienes {e} tarea/s que vence/n en un dia",
-                                      QSystemTrayIcon.Information, 5000)
-                tray_icon.setVisible(False)
-                tray_icon.deleteLater()
+            if e > 0:
+                self.tray_icon.show()
+                self.tray_icon.showMessage("Gestor de tareas", f"tienes {e} tarea/s que vence/n en un dia", 5000)
 
     def cambiarHorario(self):
         fecha = self.calendarWidgetAgregar.selectedDate()
