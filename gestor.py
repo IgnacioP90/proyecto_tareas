@@ -197,11 +197,11 @@ class Gui(QMainWindow):
         e = delete(textoE)
         if e:
             res = todas()
+            if res:
+                self.imprimir_tuplas(res)
             self.LabelMsj.setStyleSheet('color:blue; border:0px')
             self.LabelMsj.setText('Tarea eliminada correctamente')
             self.LabelMsj.show()
-            if res:
-                self.imprimir_tuplas(res)
         else:
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No se elimino la tarea porque no existe')
