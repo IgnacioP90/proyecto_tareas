@@ -1,26 +1,31 @@
 import os
+import re
+
 import PyQt5
 from src.func.funciones import *
 import sys
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow, QApplication, \
-    QAbstractItemView, QTableWidgetItem, QGraphicsView, QGraphicsScene, QGraphicsTextItem, QMenu, QSystemTrayIcon
+    QAbstractItemView, QTableWidgetItem, QGraphicsView, QGraphicsScene, QGraphicsTextItem, QMenu, QSystemTrayIcon, \
+    QMessageBox, QGraphicsDropShadowEffect
 from PyQt5.QtCore import QDate, QTimer, Qt, QTime
-from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtGui import QFont, QIcon, QColor
 from PyQt5 import QtCore, QtWidgets
+
+
 
 class Gui(QMainWindow):
     def __init__(self):
         super(Gui, self).__init__()
         loadUi("proyecto_tareas.ui", self)
-
-        fecha_actual = QDate.currentDate()
         hora = QTime.currentTime().addSecs(7200)
+        self.actualizarFecha()
+
+        self.Agregar.clicked.connect(self.actualizarFecha)
         self.tableWidgetBuscar.hide()
         self.LabelMsj.hide()
         self.limite_caja_texto()
 
-        self.calendarWidgetAgregar.setMinimumDate(fecha_actual)
         self.TituloAgregar.textChanged.connect(self.check_text)
         self.DescripcionAgregar.textChanged.connect(self.check_text)
 
@@ -50,6 +55,7 @@ class Gui(QMainWindow):
         self.BotonAgregarT.clicked.connect(self.obtener_datos)
         self.Agregar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page))
         self.Agregar.clicked.connect(lambda: self.LabelMsj.hide())
+
         self.Buscar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_2))
         self.Editar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_3))
         self.Eliminar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_6))
@@ -62,13 +68,9 @@ class Gui(QMainWindow):
         self.SelectTitulo.clicked.connect(self.tituloB)
         self.SelectPrioridad.clicked.connect(self.prioriB)
         self.SelectFechaVencimiento.clicked.connect(self.calendarB)
-        self.TituloBuscar.textChanged.connect(self.check_text)
-
-        self.Editar.clicked.connect(lambda: self.BotonEditarT.setEnabled(False))
+        self.establecer_sombras()
         self.Completar.clicked.connect(self.menuCompletar)
-        self.Completar.clicked.connect(self.comprobarTareasNoCompletas)
 
-        self.TituloBuscar.textChanged.connect(self.cambiarBotonB)
         self.SelectFechaVencimiento.clicked.connect(lambda: self.BotonBuscarT.setEnabled(True))
         self.SelectTitulo.clicked.connect(lambda: self.BotonBuscarT.setEnabled(False))
         self.DescripcionEditar.clicked.connect(lambda: self.BotonEditarT.setEnabled(False))
@@ -84,10 +86,9 @@ class Gui(QMainWindow):
         self.DescripcionEditar.clicked.connect(self.mostrarDescriptEdit)
         self.PrioridadEditar.clicked.connect(self.mostrarPrioridadEdit)
         self.VencimientoEditar.clicked.connect(self.mostrarVenceEdit)
-        self.TituloEdit.textChanged.connect(self.textoEditar)
+        self.ComboEditar.activated.connect(self.textoEditar)
         self.TituloEdit_2.textChanged.connect(self.textoEditar)
         self.DescripcionEdit.textChanged.connect(self.textoEditar)
-        self.TituloEdit.textChanged.connect(self.check_text)
         self.TituloEdit_2.textChanged.connect(self.check_text)
         self.DescripcionEdit.textChanged.connect(self.check_text)
         self.VencimientoEditar.clicked.connect(self.habilitarBoton2)
@@ -96,13 +97,14 @@ class Gui(QMainWindow):
         self.Agregar.clicked.connect(lambda: self.tableWidgetBuscar.hide())
         self.Completas.clicked.connect(self.completas)
         self.Pendientes.clicked.connect(self.pendientes)
-        self.TituloCompletar.textChanged.connect(self.completarT)
-        self.TituloCompletar.textChanged.connect(self.check_text)
+        self.TareaCompletar.activated.connect(self.completarT)
+        self.TareaCompletar.activated.connect(self.MostrarTareaCompletar)
+
 
         self.BotonCompletarT.clicked.connect(self.completarLasT)
-        self.TituloEliminar.textChanged.connect(self.check_text)
         self.Eliminar.clicked.connect(self.eliminarT)
-        self.TituloEliminar.textChanged.connect(self.cambioTextoEliminar)
+        self.TareasEliminar.activated.connect(self.cambioTextoEliminar)
+        self.TareasEliminar.activated.connect(self.MostrarTareaEliminar)
         self.BotonEliminarT.clicked.connect(self.eliminarTarea)
         self.BotonEliminarT.clicked.connect(self.comprobarTareas)
         self.BotonCompletarT.clicked.connect(self.comprobarTareas)
@@ -110,6 +112,8 @@ class Gui(QMainWindow):
         self.BotonEditarT.clicked.connect(self.comprobarTareas)
         self.Todas.clicked.connect(self.verTodo)
         self.tableWidgetBuscar.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.BotonTodo.clicked.connect(self.EliminarTodo)
+        self.ComboBuscar.activated.connect(self.cambiarBotonB)
 
         self.graphics_view = QGraphicsView(self.frame_8)
         self.graphics_view.setGeometry(0, 0, 400, 120)
@@ -133,13 +137,48 @@ class Gui(QMainWindow):
         self.comprobarTareas()
 
         self.ExitButton.clicked.connect(self.cerrarBd)
-        app_path = os.path.dirname(os.path.abspath(__file__))  # ruta actual donde se ejecuta el programa
-        icon = QIcon(app_path + "/app.ico")
+        self.app_path = os.path.dirname(os.path.abspath(__file__))  # ruta actual donde se ejecuta el programa
+        icon = QIcon(self.app_path + "/app.ico")
         self.tray_icon = QSystemTrayIcon(icon, app)
         menu = QMenu()
         self.tray_icon.setContextMenu(menu)
         self.notificacion()
         self.BotonAgregarT.clicked.connect(self.notificacion)
+
+    def establecer_sombras(self):
+            elementos = [
+                self.stackedWidget,
+                self.Agregar,
+                self.Buscar,
+                self.Completar,
+                self.Editar,
+                self.Completas,
+                self.Pendientes,
+                self.Eliminar,
+                self.Todas
+            ]
+            for elemento in elementos:
+                sombra = QGraphicsDropShadowEffect(self)
+                sombra.setBlurRadius(40)
+                sombra.setXOffset(10)
+                sombra.setYOffset(10)
+                sombra.setColor(QColor(10, 100, 100, 200))
+                elemento.setGraphicsEffect(sombra)
+
+    def actualizarFecha(self):
+        fecha_actual = QDate.currentDate()
+        hora = QTime.currentTime().addSecs(7200)
+        if hora >= QTime(23, 0) or hora < QTime(1, 0):
+            fecha_actual.addDays(1)
+        self.calendarWidgetAgregar.setMinimumDate(fecha_actual)
+
+    def sombra_frame(self, frame):
+        sombra = QGraphicsDropShadowEffect(self)
+        sombra.setBlurRadius(40)
+        sombra.setXOffset(10)
+        sombra.setYOffset(10)
+        sombra.setColor(QColor(10, 100, 100, 200))
+        frame.setGraphicsEffect(sombra)
 
     def notificacion(self):
         res = todas()
@@ -149,20 +188,56 @@ class Gui(QMainWindow):
                 self.tray_icon.show()
                 self.tray_icon.showMessage("Gestor de tareas", f"tienes {e} tarea/s que vence/n en un dia", 5000)
 
+    def EliminarTodo(self):
+        msg = QMessageBox()
+        msg.setWindowIcon(QIcon(self.app_path + "/app.ico"))
+        msg.setWindowTitle("Alerta")
+        msg.setText("Esta seguro que desea eliminar las tareas?")
+        msg.setIcon(QMessageBox.Warning)
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        result = msg.exec_()
+        if result == QMessageBox.Yes:
+            e = todas()
+            if e:
+                BorrarTodo()
+                self.TareasEliminar.clear()
+                self.tableWidgetBuscar.clearContents()
+                self.tableWidgetBuscar.show()
+                self.LabelMsj.setStyleSheet('color:red; border:0px')
+                self.LabelMsj.setText('Todas las tareas fueron eliminadas')
+                self.LabelMsj.show()
+                self.comprobarTareas()
+
     def cambiarHorario(self):
         fecha = self.calendarWidgetAgregar.selectedDate()
         if fecha_actual == fecha:
-            self.HyMedit.setMinimumTime(QTime.currentTime())
+            self.HyMedit.setMinimumTime(QTime.currentTime().addSecs(3600))
         else:
             self.HyMedit.setMinimumTime(QTime(0, 0))
 
-    def comprobarTareasNoCompletas(self):
-        res = solo_no_completas()
-        if res:
-            self.imprimir_tuplas(res)
-        else:
-            self.tableWidgetBuscar.clearContents()
-            self.tableWidgetBuscar.show()
+    def mostrar_tarea(self,texto):
+
+        self.tableWidgetBuscar.clearContents()
+        self.tableWidgetBuscar.show()
+        if texto:
+            e = busqueda(texto)
+            self.imprimir_tuplas(e)
+
+    def MostrarTareaEliminar(self):
+        texto = self.TareasEliminar.currentText()
+        self.mostrar_tarea(texto)
+
+    def MostrarTareaCompletar(self):
+        texto = self.TareaCompletar.currentText()
+        self.mostrar_tarea(texto)
+
+    def MostrarTareaCompletar(self):
+        texto = self.TareaCompletar.currentText()
+        self.tableWidgetBuscar.clearContents()
+        self.tableWidgetBuscar.show()
+        if texto:
+            e = busqueda(texto)
+            self.imprimir_tuplas(e)
 
     def comprobarTareas(self):
         res = todas()
@@ -188,46 +263,50 @@ class Gui(QMainWindow):
     def eliminarTarea(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
-        textoE = self.TituloEliminar.text()
+        textoE = self.TareasEliminar.currentText()
         e = delete(textoE)
         if e:
             res = todas()
+            self.TareasEliminar.clear()
             if res:
+                for datos in enumerate(res):
+                    self.TareasEliminar.addItem(str(datos[1][0]))
                 self.imprimir_tuplas(res)
             self.LabelMsj.setStyleSheet('color:blue; border:0px')
             self.LabelMsj.setText('Tarea eliminada correctamente')
             self.LabelMsj.show()
-        else:
-            self.LabelMsj.setStyleSheet('color:red; border:0px')
-            self.LabelMsj.setText('No se elimino la tarea porque no existe')
-            self.LabelMsj.show()
-        self.TituloEliminar.setText("")
 
     def cambioTextoEliminar(self):
-        text = self.TituloEliminar.text()
-        if text:
-            self.BotonEliminarT.setEnabled(True)
-        else:
-            self.BotonEliminarT.setEnabled(False)
+        text = self.TareasEliminar.currentText()
+        self.BotonEliminarT.setEnabled(bool(text))
 
     def eliminarT(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
+        self.TareasEliminar.clear()
         res = todas()
+        if res:
+            self.BotonEliminarT.setEnabled(True)
+            for datos in enumerate(res):
+                self.TareasEliminar.addItem(str(datos[1][0]))
+        else:
+            self.BotonEliminarT.setEnabled(False)
         try:
             self.imprimir_tuplas(res)
         except Exception:
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No existen tareas')
             self.LabelMsj.show()
-        self.BotonEliminarT.setEnabled(False)
 
     def verBuscar(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
+        self.ComboBuscar.clear()
         try:
             res = todas()
             self.imprimir_tuplas(res)
+            for datos in enumerate(res):
+                self.ComboBuscar.addItem(str(datos[1][0]))
         except Exception:
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No existen tareas')
@@ -237,19 +316,23 @@ class Gui(QMainWindow):
     def menuCompletar(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
+        self.TareaCompletar.clear()
         try:
-            res = todas()
+            res = solo_no_completas()
             self.imprimir_tuplas(res)
+            pen=tareas_pendientes()
+            for datos in enumerate(pen):
+                self.TareaCompletar.addItem(str(datos[1][0]))
         except Exception:
-            self.LabelMsj.setStyleSheet('color:red; border:0px')
-            self.LabelMsj.setText('No existen tareas')
+            self.LabelMsj.setStyleSheet('color:green; border:0px')
+            self.LabelMsj.setText('Todas las tareas estan completas o vencidas')
             self.LabelMsj.show()
         self.BotonCompletarT.setEnabled(False)
 
     def completarLasT(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
-        text = self.TituloCompletar.text()
+        text = self.TareaCompletar.currentText()
         try:
             result = busqueda(text)
             if result[4] == 'pendiente':
@@ -258,23 +341,15 @@ class Gui(QMainWindow):
                 self.LabelMsj.setStyleSheet('color:blue; border:0px')
                 self.LabelMsj.setText('Se mostrara la tarea a completar')
                 self.LabelMsj.show()
-            elif result[4] == 'completa':
-                self.LabelMsj.setStyleSheet('color:green; border:0px')
-                self.LabelMsj.setText('La tarea ya estaba completa')
-                self.LabelMsj.show()
-            elif result[4] == 'vencida':
-                self.LabelMsj.setStyleSheet('color:green; border:0px')
-                self.LabelMsj.setText('La tarea ya estaba vencida')
-                self.LabelMsj.show()
-        except ValueError:
+            self.TareaCompletar.clear()
+            res=tareas_pendientes()
+            for datos in enumerate(res):
+                self.TareaCompletar.addItem(str(datos[1][0]))
+        except Exception:
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No hay tareas para completar')
             self.LabelMsj.show()
-        except Exception:
-            self.LabelMsj.setStyleSheet('color:red; border:0px')
-            self.LabelMsj.setText('No existen tareas')
-            self.LabelMsj.show()
-        self.TituloCompletar.setText("")
+
 
     def actualizarTareas(self):
         vencen = vencimientos()
@@ -294,11 +369,9 @@ class Gui(QMainWindow):
         self.text_item.setPos(self.text_item.pos().x(), pos_y)
 
     def completarT(self):
-        text = self.TituloCompletar.text()
-        if text:
-            self.BotonCompletarT.setEnabled(True)
-        else:
-            self.BotonCompletarT.setEnabled(False)
+        text = self.TareaCompletar.currentText()
+        self.BotonCompletarT.setEnabled(bool(text))
+
 
     def completas(self):
         result = tareas_completas()
@@ -328,7 +401,7 @@ class Gui(QMainWindow):
         self.TimeEditar.hide()
 
     def habilitarBoton2(self):
-        text = self.TituloEdit.text()
+        text = self.ComboEditar.currentText()
         if text:
             self.BotonEditarT.setEnabled(True)
         else:
@@ -343,9 +416,10 @@ class Gui(QMainWindow):
         self.BotonEditarT.setEnabled(False)
 
     def textoEditar(self):
-        text = self.TituloEdit.text()
+        text = self.ComboEditar.currentText()
         desc = self.DescripcionEdit.text()
         text1 = self.TituloEdit_2.text()
+        text1, desc = self.es_vacio(text1, desc)
         if text:
             if text1 or desc:
                 self.BotonEditarT.setEnabled(True)
@@ -378,16 +452,7 @@ class Gui(QMainWindow):
                 return
                 # La tarea está en estado 'completa'.
 
-            elif variable == 2:
-                res = todas()
-                self.imprimir_tuplas(res)
-                self.LabelMsj.setStyleSheet('color:red; border:0px')
-                self.LabelMsj.setText('La tarea no existe')
-                self.LabelMsj.show()
-                return
-                # La tarea no existe.
-
-            if variable != 1 and variable != 2:
+            if variable != 1:
                 self.tableWidgetBuscar.clearContents()
                 self.tableWidgetBuscar.show()
                 res = todas()
@@ -395,7 +460,9 @@ class Gui(QMainWindow):
                 self.LabelMsj.setStyleSheet('color:blue; border:0px')
                 self.LabelMsj.setText('La tarea se edito correctamente')
                 self.LabelMsj.show()
-
+            self.ComboEditar.clear()
+            for datos in enumerate(res):
+                self.ComboEditar.addItem(str(datos[1][0]))
             # la tarea se edito sin errores.
 
         except sqlite3.IntegrityError:
@@ -407,34 +474,28 @@ class Gui(QMainWindow):
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No existen tareas para editar')
             self.LabelMsj.show()
-        self.TituloEdit.setText("")
         self.TituloEdit_2.setText("")
         self.DescripcionEdit.setText("")
 
     def comprobar(self, opcion):
-        titulo = self.TituloEdit.text()
+        titulo = self.ComboEditar.currentText()
         fecha = self.calendarWidgetEditar.selectedDate()
         hym = self.TimeEditar.time()
-        comprobar = conexion.execute("SELECT * FROM tareas WHERE titulo=?", (titulo,))
-        esto = comprobar.fetchone()
-        if esto != None:
-            match opcion:
-                # opcion para editar el titulo
-                case "1":
-                    variable = self.TituloEdit_2.text()
-                # opcion para editar la descripcion
-                case "2":
-                    variable = self.DescripcionEdit.text()
-                    # opcion para editar la fecha
-                case "3":
-                    variable = fecha_vencimiento(fecha, hym)
-                # opcion para editar la prioridad
-                case "4":
-                    variable = self.PrioridadEdit.currentText()
-            e = editar_tarea(titulo, variable, opcion)
-            return e
-        else:
-            return 2  # aca es donde compruebo si existe la tarea
+        match opcion:
+            # opcion para editar el titulo
+            case "1":
+                variable = self.TituloEdit_2.text()
+            # opcion para editar la descripcion
+            case "2":
+                variable = self.DescripcionEdit.text()
+                # opcion para editar la fecha
+            case "3":
+                variable = fecha_vencimiento(fecha, hym)
+            # opcion para editar la prioridad
+            case "4":
+                variable = self.PrioridadEdit.currentText()
+        e = editar_tarea(titulo, variable, opcion)
+        return e
 
     def mostrarDescriptEdit(self):
         self.TituloEdit_2.hide()
@@ -458,13 +519,13 @@ class Gui(QMainWindow):
         self.TimeEditar.hide()
 
     def ocultar(self):
-        self.TituloBuscar.hide()
+        self.ComboBuscar.hide()
         self.PrioridadBuscar.hide()
         self.WidgetBuscar.hide()
 
     def buscarTareas(self):
         self.tableWidgetBuscar.show()
-        text = self.TituloBuscar.text()
+        text = self.ComboBuscar.currentText()
         priori = self.PrioridadBuscar.currentText()
         fecha = self.WidgetBuscar.selectedDate()
         hym = PyQt5.QtCore.QTime(0, 0)
@@ -484,10 +545,9 @@ class Gui(QMainWindow):
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('La/s tarea/s no existe/n')
             self.LabelMsj.show()
-        self.TituloBuscar.setText("")
 
     def cambiarBotonB(self):
-        texto = self.TituloBuscar.text()
+        texto = self.ComboBuscar.currentText()
         if texto:
             self.BotonBuscarT.setEnabled(True)
         else:
@@ -496,14 +556,19 @@ class Gui(QMainWindow):
     def mostrarTodo(self):
         self.tableWidgetBuscar.clearContents()
         self.tableWidgetBuscar.show()
+        self.ComboEditar.clear()
         resultado = todas()
         try:
             self.imprimir_tuplas(resultado)
+            for datos in enumerate(resultado):
+                self.ComboEditar.addItem(str(datos[1][0]))
+            self.BotonEditarT.setEnabled(True)
         except ValueError:
             self.tableWidgetBuscar.clearContents()
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No existen tareas')
             self.LabelMsj.show()
+            self.BotonEditarT.setEnabled(False)
 
     def imprimir_tuplas(self, tupla):
         if tupla:
@@ -527,38 +592,35 @@ class Gui(QMainWindow):
             raise ValueError
 
     def tituloB(self):
-        self.TituloBuscar.show()
+        self.ComboBuscar.show()
         self.PrioridadBuscar.hide()
         self.WidgetBuscar.hide()
 
     def prioriB(self):
-        self.TituloBuscar.hide()
+        self.ComboBuscar.hide()
         self.PrioridadBuscar.show()
         self.WidgetBuscar.hide()
 
     def calendarB(self):
-        self.TituloBuscar.hide()
+        self.ComboBuscar.hide()
         self.PrioridadBuscar.hide()
         self.WidgetBuscar.show()
 
     def check_text(self):
         text = self.TituloAgregar.text()
+        tedit = self.TituloEdit_2.text()
+        dedit = self.DescripcionEdit.text()
         desc = self.DescripcionAgregar.text()
-        textoB = self.TituloBuscar.text()
-        textoC = self.TituloCompletar.text()
-        textoE = self.TituloEliminar.text()
-        if not textoE:
-            self.TituloEliminar.setStyleSheet("border:1px solid red")
+        text,desc = self.es_vacio(text,desc)
+        tedit,dedit=self.es_vacio(tedit,dedit)
+        if not tedit:
+            self.TituloEdit_2.setStyleSheet("border:1px solid red")
         else:
-            self.TituloEliminar.setStyleSheet("border:1px solid blue")
-        if not textoC:
-            self.TituloCompletar.setStyleSheet("border:1px solid red")
+            self.TituloEdit_2.setStyleSheet("border:1px solid blue")
+        if not dedit:
+            self.DescripcionEdit.setStyleSheet("border:1px solid red")
         else:
-            self.TituloCompletar.setStyleSheet("border:1px solid blue")
-        if not textoB:
-            self.TituloBuscar.setStyleSheet("border:1px solid red")
-        else:
-            self.TituloBuscar.setStyleSheet("border:1px solid blue")
+            self.DescripcionEdit.setStyleSheet("border:1px solid blue")
         if not text:
             self.TituloAgregar.setStyleSheet("border:1px solid red")
             if not desc:
@@ -578,8 +640,10 @@ class Gui(QMainWindow):
         text = self.TituloAgregar.text()
         desc = self.DescripcionAgregar.text()
         hym = self.HyMedit.time()
+        text,desc = self.es_vacio(text,desc)
         priori = self.PrioridadAgregar.currentText()
         dias = self.DiasExtraAgregar.currentText()
+        text,desc = self.es_vacio(text,desc)
         try:
             fec_venc = fecha_vencimiento(fecha, hym, "1")
             agregar_tarea(text, desc, fec_venc, priori, dias)
@@ -596,10 +660,21 @@ class Gui(QMainWindow):
     def cambiarBoton(self):
         text = self.TituloAgregar.text()
         desc = self.DescripcionAgregar.text()
+        text,desc = self.es_vacio(text,desc)
         if text and desc:
             self.BotonAgregarT.setEnabled(True)
         else:
             self.BotonAgregarT.setEnabled(False)
+
+    def es_vacio(self, text, desc=None):
+        text = text.strip()
+        if desc:
+            desc = desc.strip()
+        text = re.sub(r'\s+', ' ', text)
+        if desc:
+            desc = re.sub(r'\s+', ' ', desc)
+
+        return text, desc
 
     def mover_ventana(self, event):
         if not self.isMaximized():
@@ -639,14 +714,6 @@ class Gui(QMainWindow):
         self.TituloAgregar.setMaxLength(20)
         self.DescripcionAgregar.setPlaceholderText("Ingrese una descripcion")
         self.DescripcionAgregar.setMaxLength(40)
-        self.TituloCompletar.setPlaceholderText("Ingrese titulo a completar")
-        self.TituloCompletar.setMaxLength(20)
-        self.TituloEliminar.setPlaceholderText("Ingrese titulo a eliminar")
-        self.TituloEliminar.setMaxLength(20)
-        self.TituloBuscar.setPlaceholderText("Ingrese titulo a buscar")
-        self.TituloBuscar.setMaxLength(20)
-        self.TituloEdit.setPlaceholderText("Ingrese titulo a editar")
-        self.TituloEdit.setMaxLength(20)
         self.TituloEdit_2.setPlaceholderText("Ingrese un titulo")
         self.TituloEdit_2.setMaxLength(20)
         self.DescripcionEdit.setPlaceholderText("Ingrese una descripcion")

@@ -156,6 +156,13 @@ def actualizar(fecha_actual):
             conexion.execute("UPDATE tareas SET estado='pendiente' WHERE titulo=? and fec_ven=?", (stat[0], fecha))
             conexion.commit()
 
+def BorrarTodo():
+    query=conexion.execute("SELECT * FROM tareas")
+    result=query.fetchall()
+    if result:
+        conexion.execute("DELETE FROM tareas")
+        conexion.commit()
+
 def vencimientos():
     a = 0
     b = 0
@@ -182,6 +189,7 @@ def vencimientos():
                     total = f"{dias} dias {horas} hs y {minutos} minutos"
             if (tareas[4] == 'vencida'):
                 a += 1
+                print(a)
             if (tareas_por_vencer <= 168 and tareas[4] == 'pendiente'):
                 if (tareas_por_vencer <= 24 and tareas_por_vencer >= 0):
                     b += 1
