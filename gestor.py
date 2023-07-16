@@ -48,6 +48,12 @@ class Gui(QMainWindow):
         self.gripSize = 10
         self.grip = QtWidgets.QSizeGrip(self)
         self.grip.resize(self.gripSize, self.gripSize)
+        self.grip1 = QtWidgets.QSizeGrip(self)
+        self.grip1.resize(self.gripSize, self.gripSize)
+        self.grip2 = QtWidgets.QSizeGrip(self)
+        self.grip2.resize(self.gripSize, self.gripSize)
+        self.grip3 = QtWidgets.QSizeGrip(self)
+        self.grip3.resize(self.gripSize, self.gripSize)
 
         self.frame_superior.mouseMoveEvent = self.mover_ventana
         self.frame_superior.mousePressEvent = self.guardar_posicion_clic
@@ -100,14 +106,13 @@ class Gui(QMainWindow):
         self.TareaCompletar.activated.connect(self.completarT)
         self.TareaCompletar.activated.connect(self.MostrarTareaCompletar)
 
-
         self.BotonCompletarT.clicked.connect(self.completarLasT)
         self.Eliminar.clicked.connect(self.eliminarT)
         self.TareasEliminar.activated.connect(self.cambioTextoEliminar)
         self.TareasEliminar.activated.connect(self.MostrarTareaEliminar)
         self.BotonEliminarT.clicked.connect(self.eliminarTarea)
-        self.BotonEliminarT.clicked.connect(self.comprobarTareas)
-        self.BotonCompletarT.clicked.connect(self.comprobarTareas)
+
+
         self.BotonAgregarT.clicked.connect(self.comprobarTareas)
         self.BotonEditarT.clicked.connect(self.comprobarTareas)
         self.Todas.clicked.connect(self.verTodo)
@@ -192,7 +197,7 @@ class Gui(QMainWindow):
         msg = QMessageBox()
         msg.setWindowIcon(QIcon(self.app_path + "/app.ico"))
         msg.setWindowTitle("Alerta")
-        msg.setText("Esta seguro que desea eliminar las tareas?")
+        msg.setText("Esta seguro que desea eliminar TODAS las tareas?")
         msg.setIcon(QMessageBox.Warning)
         msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         result = msg.exec_()
@@ -207,6 +212,8 @@ class Gui(QMainWindow):
                 self.LabelMsj.setText('Todas las tareas fueron eliminadas')
                 self.LabelMsj.show()
                 self.comprobarTareas()
+                self.BotonEliminarT.setEnabled(False)
+                self.BotonTodo.setEnabled(False)
 
     def cambiarHorario(self):
         fecha = self.calendarWidgetAgregar.selectedDate()
@@ -275,6 +282,7 @@ class Gui(QMainWindow):
             self.LabelMsj.setStyleSheet('color:blue; border:0px')
             self.LabelMsj.setText('Tarea eliminada correctamente')
             self.LabelMsj.show()
+        self.comprobarTareas()
 
     def cambioTextoEliminar(self):
         text = self.TareasEliminar.currentText()
@@ -323,11 +331,12 @@ class Gui(QMainWindow):
             pen=tareas_pendientes()
             for datos in enumerate(pen):
                 self.TareaCompletar.addItem(str(datos[1][0]))
+            self.BotonCompletarT.setEnabled(True)
         except Exception:
-            self.LabelMsj.setStyleSheet('color:green; border:0px')
-            self.LabelMsj.setText('Todas las tareas estan completas o vencidas')
+            self.LabelMsj.setStyleSheet('color:red; border:0px')
+            self.LabelMsj.setText('No hay tareas para completar')
             self.LabelMsj.show()
-        self.BotonCompletarT.setEnabled(False)
+            self.BotonCompletarT.setEnabled(False)
 
     def completarLasT(self):
         self.tableWidgetBuscar.clearContents()
@@ -336,19 +345,23 @@ class Gui(QMainWindow):
         try:
             result = busqueda(text)
             if result[4] == 'pendiente':
-                completa = completar_tarea(text)
-                self.imprimir_tuplas(completa)
+                completar_tarea(text)
+                self.imprimir_tuplas(result)
                 self.LabelMsj.setStyleSheet('color:blue; border:0px')
                 self.LabelMsj.setText('Se mostrara la tarea a completar')
                 self.LabelMsj.show()
-            self.TareaCompletar.clear()
-            res=tareas_pendientes()
-            for datos in enumerate(res):
-                self.TareaCompletar.addItem(str(datos[1][0]))
-        except Exception:
+                self.TareaCompletar.clear()
+                res=tareas_pendientes()
+                if res:
+                    for datos in enumerate(res):
+                        self.TareaCompletar.addItem(str(datos[1][0]))
+                else:
+                    self.BotonCompletarT.setEnabled(False)
+        except Exception as e:
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No hay tareas para completar')
             self.LabelMsj.show()
+            print(e)
 
 
     def actualizarTareas(self):
@@ -695,6 +708,13 @@ class Gui(QMainWindow):
         if event.buttons() == QtCore.Qt.LeftButton:
             self.clickPosition = event.globalPos()
         event.accept()
+
+    def resizeEvent(self, event):
+        rect= self.rect()
+        self.grip.move(rect.right() - self.gripSize, rect.bottom() - self.gripSize)
+
+        self.grip2.move(0, rect.bottom() - self.gripSize)
+        self.grip3.move(rect.left() - self.gripSize, rect.top() - self.gripSize)
 
     def ctrl_minimize(self):
         self.showMinimized()

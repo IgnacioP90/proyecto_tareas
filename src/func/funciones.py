@@ -12,13 +12,12 @@ def agregar_tarea(titulo, desc, fec_venc, prioridad, numero):
 def completar_tarea(titulo):
     resultado = conexion.execute("SELECT * FROM tareas WHERE titulo=?", (titulo,))
     status = resultado.fetchone()
-    if status:
-        if (status[4] == 'pendiente'):
+
+    if (status[4] == 'pendiente'):
             conexion.execute("UPDATE tareas SET estado='completa' WHERE titulo=?", (titulo,))
             conexion.commit()
-        return status
-    else:
-        return None
+
+
 
 def tareas_pendientes():
     result = conexion.execute("SELECT * FROM tareas WHERE estado='pendiente'")
