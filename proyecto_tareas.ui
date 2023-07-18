@@ -1312,10 +1312,7 @@ QLabel
 	
 	
 }
-QGraphicsTextItem
-{
-	font: 75 italic 9pt &quot;Comic Sans MS&quot;;
-}</string>
+</string>
                            </property>
                            <property name="frameShape">
                             <enum>QFrame::StyledPanel</enum>
