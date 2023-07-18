@@ -20,7 +20,6 @@ class Gui(QMainWindow):
         hora = QTime.currentTime().addSecs(7200)
         self.actualizarFecha(hora)
 
-
         self.tableWidgetBuscar.hide()
         self.LabelMsj.hide()
         self.limite_caja_texto()
@@ -68,16 +67,15 @@ class Gui(QMainWindow):
         self.Completas.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_4))
         self.Pendientes.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_4))
         self.Todas.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_4))
-        self.Buscar.clicked.connect(self.verBuscar)
+        self.Buscar.clicked.connect(lambda: self.BotonBuscarT.setEnabled(False))
         self.Buscar.clicked.connect(self.ocultar)
         self.SelectTitulo.clicked.connect(self.tituloB)
         self.SelectPrioridad.clicked.connect(self.prioriB)
         self.SelectFechaVencimiento.clicked.connect(self.calendarB)
         self.establecer_sombras()
         self.Completar.clicked.connect(self.menuCompletar)
-
+        self.SelectTitulo.clicked.connect(self.verBuscar)
         self.SelectFechaVencimiento.clicked.connect(lambda: self.BotonBuscarT.setEnabled(True))
-        self.SelectTitulo.clicked.connect(lambda: self.BotonBuscarT.setEnabled(False))
         self.DescripcionEditar.clicked.connect(lambda: self.BotonEditarT.setEnabled(False))
         self.SelectPrioridad.clicked.connect(lambda: self.BotonBuscarT.setEnabled(True))
         self.BotonBuscarT.clicked.connect(self.buscarTareas)
@@ -117,7 +115,7 @@ class Gui(QMainWindow):
         self.Todas.clicked.connect(self.verTodo)
         self.tableWidgetBuscar.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.BotonTodo.clicked.connect(self.EliminarTodo)
-        self.ComboBuscar.activated.connect(self.cambiarBotonB)
+
 
         self.graphics_view = QGraphicsView(self.frame_8)
         self.graphics_view.setGeometry(0, 0, 400, 120)
@@ -325,11 +323,12 @@ class Gui(QMainWindow):
             self.imprimir_tuplas(res)
             for datos in enumerate(res):
                 self.ComboBuscar.addItem(str(datos[1][0]))
+            self.BotonBuscarT.setEnabled(True)
         except Exception:
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No existen tareas')
             self.LabelMsj.show()
-        self.BotonBuscarT.setEnabled(False)
+            self.BotonBuscarT.setEnabled(False)
 
     def menuCompletar(self):
         self.tableWidgetBuscar.clearContents()
@@ -561,12 +560,7 @@ class Gui(QMainWindow):
             self.LabelMsj.setText('La/s tarea/s no existe/n')
             self.LabelMsj.show()
 
-    def cambiarBotonB(self):
-        texto = self.ComboBuscar.currentText()
-        if texto:
-            self.BotonBuscarT.setEnabled(True)
-        else:
-            self.BotonBuscarT.setEnabled(False)
+
 
     def mostrarTodo(self):
         self.tableWidgetBuscar.clearContents()
@@ -603,6 +597,9 @@ class Gui(QMainWindow):
                     for columna, dato in enumerate(datos):
                         item = QTableWidgetItem(str(dato))
                         self.tableWidgetBuscar.setItem(fila, columna, item)
+                        dato_str=str(dato)
+                        if len(dato_str) > 20:
+                            self.tableWidgetBuscar.setRowHeight(fila, 30 * (len(str(dato)) // 20))
             self.tableWidgetBuscar.show()
         else:
             raise ValueError
@@ -736,11 +733,9 @@ class Gui(QMainWindow):
         self.TituloAgregar.setPlaceholderText("Ingrese un titulo")
         self.TituloAgregar.setMaxLength(20)
         self.DescripcionAgregar.setPlaceholderText("Ingrese una descripcion")
-        self.DescripcionAgregar.setMaxLength(40)
         self.TituloEdit_2.setPlaceholderText("Ingrese un titulo")
         self.TituloEdit_2.setMaxLength(20)
         self.DescripcionEdit.setPlaceholderText("Ingrese una descripcion")
-        self.DescripcionEdit.setMaxLength(40)
 
     def cerrarBd(self):
         conexion.close()
