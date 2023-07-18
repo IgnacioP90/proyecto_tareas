@@ -125,9 +125,9 @@ class Gui(QMainWindow):
         self.graphics_view.setScene(self.scene)
         self.graphics_view.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.graphics_view.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.graphics_view.setFixedSize(400, 127)
+        self.graphics_view.setFixedSize(450, 130)
         self.text_item = QGraphicsTextItem()
-        self.text_item.setTextWidth(400)
+        self.text_item.setTextWidth(450)
         font = QFont()
         font.setBold(True)
         font.setFamily("Comic Sans MS")
@@ -138,7 +138,7 @@ class Gui(QMainWindow):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.scroll_text)
-        self.timer.start(20)
+        self.timer.start(50)
         self.comprobarTareas()
 
         self.ExitButton.clicked.connect(self.cerrarBd)
@@ -368,7 +368,7 @@ class Gui(QMainWindow):
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No hay tareas para completar')
             self.LabelMsj.show()
-            print(e)
+
 
 
     def actualizarTareas(self):

@@ -188,7 +188,6 @@ def vencimientos():
                     total = f"{dias} dias {horas} hs y {minutos} minutos"
             if (tareas[4] == 'vencida'):
                 a += 1
-                print(a)
             if (tareas_por_vencer <= 168 and tareas[4] == 'pendiente'):
                 if (tareas_por_vencer <= 24 and tareas_por_vencer >= 0):
                     b += 1
