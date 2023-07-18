@@ -8,6 +8,7 @@ try:
     cursor.execute("""CREATE TABLE IF NOT EXISTS tareas (
                         titulo TEXT PRIMARY KEY,
                         descripcion TEXT,
+                        creacion TEXT,
                         fec_ven TEXT,
                         prioridad TEXT,
                         estado TEXT,

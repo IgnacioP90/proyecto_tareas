@@ -2,10 +2,10 @@ from datetime import *
 from ..bd_connect import *
 fecha_actual = datetime.now()
 
-def agregar_tarea(titulo, desc, fec_venc, prioridad, numero):
+def agregar_tarea(titulo, desc, fec_venc,fecha_hoy, prioridad, numero):
     conexion.execute(
-        "INSERT INTO tareas (titulo, descripcion, fec_ven, prioridad, estado, limite) VALUES (?,?,?,?,?,?)",
-        (titulo, desc, fec_venc, prioridad, 'pendiente', numero))
+        "INSERT INTO tareas (titulo, descripcion, creacion,fec_ven, prioridad, estado, limite) VALUES (?,?,?,?,?,?,?)",
+        (titulo, desc, fecha_hoy,fec_venc, prioridad, 'pendiente', numero))
     conexion.commit()
 
 def completar_tarea(titulo):
@@ -122,11 +122,7 @@ def fecha_vencimiento(fecha, hym,eleccion=None):  # eleccion=None lo use porque 
 
 # actualiza las tareas, cuando la fecha de vencimiento de la tarea, sobrepasa a la tarea actual, cada una de ellas tendra el estado a vencida, estando en estado pendiente
 def actualizar(fecha_actual):
-    try:
-        conexion.execute("SELECT limite FROM tareas")
-    except sqlite3.OperationalError:
-        conexion.execute("ALTER TABLE tareas ADD limite INT")
-        conexion.commit()
+    conexion.execute("SELECT limite FROM tareas")
     estado = conexion.execute("SELECT titulo, fec_ven, estado, limite FROM tareas")
     status = estado.fetchall()
     for stat in status:
@@ -163,8 +159,8 @@ def vencimientos():
     todo = todas()
     if todo:
         for tareas in todo:
-            s = convertir(tareas[2])  # Debo convertirlo a tipo datetime porque desde la base de datos esta en tipo str
-            limit = cantidad_dias(s, tareas[5])  # actualizo la fecha de vencimiento para que me muestre la fecha sumado a los dias que se le agrega al vencimiento, seria, sumando fecha de vencimiento y limite
+            s = convertir(tareas[3])  # Debo convertirlo a tipo datetime porque desde la base de datos esta en tipo str
+            limit = cantidad_dias(s, tareas[6])  # actualizo la fecha de vencimiento para que me muestre la fecha sumado a los dias que se le agrega al vencimiento, seria, sumando fecha de vencimiento y limite
             vencidas = limit - fecha_actual  # resto la fecha actual con cada una de las fechas que aparecen en la base de datos
             tareas_por_vencer = vencidas.days * 24 + vencidas.seconds // 3600  # convierto la fecha en numeros, el equivalente a las horas.
             dias = vencidas.days
@@ -180,7 +176,7 @@ def vencimientos():
                     total = f"{dias} dias {horas} hs y {minutos} minutos"
             if (tareas[4] == 'vencida'):
                 a += 1
-            if (tareas_por_vencer <= 168 and tareas[4] == 'pendiente'):
+            if (tareas_por_vencer <= 168 and tareas[5] == 'pendiente'):
                 if (tareas_por_vencer <= 24 and tareas_por_vencer >= 0):
                     b += 1
                 d.append(total)
@@ -222,3 +218,14 @@ def solo_no_completas():
         return result
     else:
         return None
+
+def resultado_desc(desc):
+    contador = 0
+    resultado = ""
+    for caracter in desc:
+        resultado += caracter
+        contador += 1
+        if contador == 20:
+            resultado += '\n'
+            contador = 0
+    return resultado
