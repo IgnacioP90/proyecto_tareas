@@ -124,7 +124,7 @@ def fecha_vencimiento(fecha, hym,eleccion=None):  # eleccion=None lo use porque 
         fec_venc = convertir(fecha_hora_str, eleccion)
 
         if fec_venc <= fecha_actual and eleccion is None:
-            raise TypeError
+            return fec_venc
 
     return fec_venc
 

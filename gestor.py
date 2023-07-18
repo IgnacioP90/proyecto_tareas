@@ -190,8 +190,12 @@ class Gui(QMainWindow):
         if res:
             e = self.actualizarTareas()
             if e > 0:
-                self.tray_icon.show()
-                self.tray_icon.showMessage("Gestor de tareas", f"tienes {e} tarea/s que vence/n en un dia", 5000)
+                if e==1:
+                    self.tray_icon.show()
+                    self.tray_icon.showMessage("Gestor de tareas", f"tienes {e} tarea que vence en un dia", 5000)
+                else:
+                    self.tray_icon.show()
+                    self.tray_icon.showMessage("Gestor de tareas", f"tienes {e} tareas que vencen en un dia", 5000)
 
     def EliminarTodo(self):
         msg = QMessageBox()
@@ -450,7 +454,6 @@ class Gui(QMainWindow):
 
     def EditarTarea(self):
         self.tableWidgetBuscar.clearContents()
-        self.BotonEditarT.setEnabled(False)
         try:
             if self.TituloEditar.isChecked():
                 opcion = "1"
@@ -475,14 +478,16 @@ class Gui(QMainWindow):
             if variable != 1:
                 self.tableWidgetBuscar.clearContents()
                 self.tableWidgetBuscar.show()
+                if opcion=="3":
+                    actualizar(fecha_actual)
                 res = todas()
                 self.imprimir_tuplas(res)
                 self.LabelMsj.setStyleSheet('color:blue; border:0px')
                 self.LabelMsj.setText('La tarea se edito correctamente')
                 self.LabelMsj.show()
-            self.ComboEditar.clear()
-            for datos in enumerate(res):
-                self.ComboEditar.addItem(str(datos[1][0]))
+                self.ComboEditar.clear()
+                for datos in enumerate(res):
+                    self.ComboEditar.addItem(str(datos[1][0]))
             # la tarea se edito sin errores.
 
         except sqlite3.IntegrityError:
