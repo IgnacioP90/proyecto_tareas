@@ -218,7 +218,8 @@ def mostrar_vencidas(vencidas=None, vencen_1=None, titulos=None, vencen=None):
     else:
         mensaje += "Felicidades, no tienes tareas vencidas!\n"
     mensaje += f"Cantidad de tareas que vencen en un día: {vencen_1}\n"
-    mensaje += "Nombre de la(s) tarea(s) que vencerá(n) en una semana:\n"
+    mensaje += "--"*25
+    mensaje += "\nNombre de la(s) tarea(s) que vencerá(n) en una semana:\n"
     for titulo, vencimiento in zip(titulos, vencen):
         mensaje += f" Titulo: {titulo} - Vence en: {vencimiento}\n"
     return mensaje, vencen_1

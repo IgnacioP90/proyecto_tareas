@@ -1,6 +1,5 @@
 import os
 import re
-
 import PyQt5
 from src.func.funciones import *
 import sys
@@ -122,23 +121,24 @@ class Gui(QMainWindow):
 
         self.graphics_view = QGraphicsView(self.frame_8)
         self.graphics_view.setGeometry(0, 0, 400, 120)
-
         self.scene = QGraphicsScene(self)
         self.graphics_view.setScene(self.scene)
         self.graphics_view.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.graphics_view.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.graphics_view.setFixedSize(400, 120)
+        self.graphics_view.setFixedSize(400, 127)
         self.text_item = QGraphicsTextItem()
         self.text_item.setTextWidth(400)
         font = QFont()
+        font.setBold(True)
         font.setFamily("Comic Sans MS")
         font.setPointSize(9)
+        font.bold()
         self.text_item.setFont(font)
         self.scene.addItem(self.text_item)
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.scroll_text)
-        self.timer.start(40)
+        self.timer.start(20)
         self.comprobarTareas()
 
         self.ExitButton.clicked.connect(self.cerrarBd)
@@ -173,8 +173,8 @@ class Gui(QMainWindow):
     def actualizarFecha(self):
         fecha_actual = QDate.currentDate()
         hora = QTime.currentTime().addSecs(7200)
-        if hora >= QTime(23, 0) or hora < QTime(1, 0):
-            fecha_actual.addDays(1)
+        if hora >= QTime(22, 0,0) or hora <= QTime(1, 59,0):
+            fecha_actual=fecha_actual.addDays(1)
         self.calendarWidgetAgregar.setMinimumDate(fecha_actual)
 
     def sombra_frame(self, frame):
@@ -212,8 +212,9 @@ class Gui(QMainWindow):
                 self.LabelMsj.setText('Todas las tareas fueron eliminadas')
                 self.LabelMsj.show()
                 self.comprobarTareas()
-                self.BotonEliminarT.setEnabled(False)
                 self.BotonTodo.setEnabled(False)
+                self.BotonEliminarT.setEnabled(False)
+
 
     def cambiarHorario(self):
         fecha = self.calendarWidgetAgregar.selectedDate()
@@ -251,7 +252,7 @@ class Gui(QMainWindow):
         if res:
             self.actualizarTareas()
         else:
-            mensaje = 'no hay tareas'
+            mensaje = 'NO HAY TAREAS'
             self.text_item.setPlainText(mensaje)  # Asignar el texto al QGraphicsTextItem creado mas arriba
             self.timer = QTimer(self)
             self.timer.timeout.connect(self.scroll_text)
@@ -279,6 +280,9 @@ class Gui(QMainWindow):
                 for datos in enumerate(res):
                     self.TareasEliminar.addItem(str(datos[1][0]))
                 self.imprimir_tuplas(res)
+            else:
+                self.BotonEliminarT.setEnabled(False)
+                self.BotonTodo.setEnabled(False)
             self.LabelMsj.setStyleSheet('color:blue; border:0px')
             self.LabelMsj.setText('Tarea eliminada correctamente')
             self.LabelMsj.show()
@@ -287,6 +291,7 @@ class Gui(QMainWindow):
     def cambioTextoEliminar(self):
         text = self.TareasEliminar.currentText()
         self.BotonEliminarT.setEnabled(bool(text))
+        self.BotonTodo.setEnabled(bool(text))
 
     def eliminarT(self):
         self.tableWidgetBuscar.clearContents()
@@ -295,10 +300,12 @@ class Gui(QMainWindow):
         res = todas()
         if res:
             self.BotonEliminarT.setEnabled(True)
+            self.BotonTodo.setEnabled(True)
             for datos in enumerate(res):
                 self.TareasEliminar.addItem(str(datos[1][0]))
         else:
             self.BotonEliminarT.setEnabled(False)
+            self.BotonTodo.setEnabled(False)
         try:
             self.imprimir_tuplas(res)
         except Exception:
