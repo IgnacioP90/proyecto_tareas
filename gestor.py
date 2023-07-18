@@ -18,9 +18,9 @@ class Gui(QMainWindow):
         super(Gui, self).__init__()
         loadUi("proyecto_tareas.ui", self)
         hora = QTime.currentTime().addSecs(7200)
-        self.actualizarFecha()
+        self.actualizarFecha(hora)
 
-        self.Agregar.clicked.connect(self.actualizarFecha)
+
         self.tableWidgetBuscar.hide()
         self.LabelMsj.hide()
         self.limite_caja_texto()
@@ -170,9 +170,8 @@ class Gui(QMainWindow):
                 sombra.setColor(QColor(10, 100, 100, 200))
                 elemento.setGraphicsEffect(sombra)
 
-    def actualizarFecha(self):
+    def actualizarFecha(self,hora):
         fecha_actual = QDate.currentDate()
-        hora = QTime.currentTime().addSecs(7200)
         if hora >= QTime(22, 0,0) or hora <= QTime(1, 59,0):
             fecha_actual=fecha_actual.addDays(1)
         self.calendarWidgetAgregar.setMinimumDate(fecha_actual)
@@ -464,30 +463,21 @@ class Gui(QMainWindow):
             elif self.PrioridadEditar.isChecked():
                 opcion = "4"
 
-            variable = self.comprobar(opcion)
+            self.comprobar(opcion)
 
-            if variable == 1:
-                res = todas()
-                self.imprimir_tuplas(res)
-                self.LabelMsj.setStyleSheet('color:red; border:0px')
-                self.LabelMsj.setText('No se puede editar una tarea completa')
-                self.LabelMsj.show()
-                return
-                # La tarea está en estado 'completa'.
-
-            if variable != 1:
-                self.tableWidgetBuscar.clearContents()
-                self.tableWidgetBuscar.show()
-                if opcion=="3":
-                    actualizar(fecha_actual)
-                res = todas()
-                self.imprimir_tuplas(res)
-                self.LabelMsj.setStyleSheet('color:blue; border:0px')
-                self.LabelMsj.setText('La tarea se edito correctamente')
-                self.LabelMsj.show()
-                self.ComboEditar.clear()
-                for datos in enumerate(res):
-                    self.ComboEditar.addItem(str(datos[1][0]))
+            self.tableWidgetBuscar.clearContents()
+            self.tableWidgetBuscar.show()
+            if opcion == "3":
+                actualizar(fecha_actual)
+            res = todas()
+            self.imprimir_tuplas(res)
+            self.LabelMsj.setStyleSheet('color:blue; border:0px')
+            self.LabelMsj.setText('La tarea se edito correctamente')
+            self.LabelMsj.show()
+            self.ComboEditar.clear()
+            noCompletas=solo_no_completas()
+            for datos in enumerate(noCompletas):
+                self.ComboEditar.addItem(str(datos[1][0]))
             # la tarea se edito sin errores.
 
         except sqlite3.IntegrityError:
@@ -519,8 +509,8 @@ class Gui(QMainWindow):
             # opcion para editar la prioridad
             case "4":
                 variable = self.PrioridadEdit.currentText()
-        e = editar_tarea(titulo, variable, opcion)
-        return e
+        editar_tarea(titulo, variable, opcion)
+
 
     def mostrarDescriptEdit(self):
         self.TituloEdit_2.hide()
@@ -585,7 +575,8 @@ class Gui(QMainWindow):
         resultado = todas()
         try:
             self.imprimir_tuplas(resultado)
-            for datos in enumerate(resultado):
+            res=solo_no_completas()
+            for datos in enumerate(res):
                 self.ComboEditar.addItem(str(datos[1][0]))
             self.BotonEditarT.setEnabled(True)
         except ValueError:

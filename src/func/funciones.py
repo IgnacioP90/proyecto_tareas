@@ -1,8 +1,7 @@
 from datetime import *
-
 from ..bd_connect import *
-
 fecha_actual = datetime.now()
+
 def agregar_tarea(titulo, desc, fec_venc, prioridad, numero):
     conexion.execute(
         "INSERT INTO tareas (titulo, descripcion, fec_ven, prioridad, estado, limite) VALUES (?,?,?,?,?,?)",
@@ -46,9 +45,7 @@ def editar_tarea(titulo, variable, opcion):
             case "4":
                 conexion.execute("UPDATE tareas SET prioridad=? WHERE titulo=?", (variable, titulo))
                 conexion.commit()
-        return data
-    else:
-        return 1  # retorno una bandera para hacer una comprobacion
+        # retorno una bandera para hacer una comprobacion
 
 def tareas_completas():
     result = conexion.execute("SELECT * FROM tareas WHERE estado='completa'")
@@ -107,7 +104,6 @@ def convertir(fec_venc, eleccion=None):  # convierto la variable fec_venc a date
 
 # funcion para ingresar las fechas en las distintas opciones
 def fecha_vencimiento(fecha, hym,eleccion=None):  # eleccion=None lo use porque hay veces que mando un parametro y otras veces no
-    fec_venc = None
     fecha_actual = datetime.now()
 
     # ingreso la fecha para luego convertirla a formato datetime
@@ -122,10 +118,6 @@ def fecha_vencimiento(fecha, hym,eleccion=None):  # eleccion=None lo use porque 
         hora_str = hym.toString("HH:mm:ss")
         fecha_hora_str = fecha_str + " " + hora_str
         fec_venc = convertir(fecha_hora_str, eleccion)
-
-        if fec_venc <= fecha_actual and eleccion is None:
-            return fec_venc
-
     return fec_venc
 
 # actualiza las tareas, cuando la fecha de vencimiento de la tarea, sobrepasa a la tarea actual, cada una de ellas tendra el estado a vencida, estando en estado pendiente
