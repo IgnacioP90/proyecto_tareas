@@ -103,6 +103,7 @@ class Gui(QMainWindow):
         self.Pendientes.clicked.connect(self.pendientes)
         self.TareaCompletar.activated.connect(self.completarT)
         self.TareaCompletar.activated.connect(self.MostrarTareaCompletar)
+        self.tableWidgetBuscar.horizontalHeader().sectionClicked.connect(self.sort_table)
 
         self.BotonCompletarT.clicked.connect(self.completarLasT)
         self.Eliminar.clicked.connect(self.eliminarT)
@@ -114,6 +115,7 @@ class Gui(QMainWindow):
         self.BotonAgregarT.clicked.connect(self.comprobarTareas)
         self.BotonEditarT.clicked.connect(self.comprobarTareas)
         self.Todas.clicked.connect(self.verTodo)
+        self.header_clicked = [False] * self.tableWidgetBuscar.columnCount()
         self.tableWidgetBuscar.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.BotonTodo.clicked.connect(self.EliminarTodo)
 
@@ -632,10 +634,17 @@ class Gui(QMainWindow):
                             item.setForeground(QColor(0, 85, 0))
                         if "pendiente" in datos:
                             item.setForeground(QColor(255, 170, 0))
-
+                        if "vencida" in datos or "pendiente" in datos:
+                            if str(dato) == "ALTA":
+                                item.setForeground(QColor(170, 0, 0))
             self.tableWidgetBuscar.show()
         else:
             raise ValueError
+
+    def sort_table(self, logicalIndex):
+        self.header_clicked[logicalIndex] = not self.header_clicked[logicalIndex]
+        order = Qt.DescendingOrder if self.header_clicked[logicalIndex] else Qt.AscendingOrder
+        self.tableWidgetBuscar.sortItems(logicalIndex, order)
 
     def tituloB(self):
         self.ComboBuscar.show()
@@ -721,7 +730,6 @@ class Gui(QMainWindow):
         text = re.sub(r'\s+', ' ', text)
         if desc:
             desc = re.sub(r'\s+', ' ', desc)
-
         return text, desc
 
     def mover_ventana(self, event):

@@ -98,8 +98,6 @@ def convertir(fec_venc, eleccion=None):  # convierto la variable fec_venc a date
 
 # funcion para ingresar las fechas en las distintas opciones
 def fecha_vencimiento(fecha, hym,eleccion=None):  # eleccion=None lo use porque hay veces que mando un parametro y otras veces no
-    fecha_actual = datetime.now()
-
     # ingreso la fecha para luego convertirla a formato datetime
     if eleccion == "2":
         fecha_str = fecha.toString("yyyy-MM-dd")
@@ -149,7 +147,6 @@ def vencimientos():
     b = 0
     c = []
     d = []
-    e = []
     actualizar(fecha_actual)
     todo = todas()
     if todo:
@@ -174,10 +171,10 @@ def vencimientos():
             if (tareas_por_vencer <= 168 and tareas[5] == 'pendiente'):
                 if (tareas_por_vencer <= 24 and tareas_por_vencer >= 0):
                     b += 1
-                    e.append(tareas[0])
+
                 d.append(total)
                 c.append(tareas[0])
-        return a, b, c, d, e
+        return a, b, c, d
 
 def delete(titulo):
     resultado=busqueda(titulo)
