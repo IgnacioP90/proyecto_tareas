@@ -57,9 +57,9 @@ class Gui(QMainWindow):
         self.frame_superior.mousePressEvent = self.guardar_posicion_clic
         self.stackedWidget.setCurrentWidget(self.page)
         self.BotonAgregarT.clicked.connect(self.obtener_datos)
-        self.Agregar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page))
+        self.Agregar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_1))
         self.Agregar.clicked.connect(lambda: self.LabelMsj.hide())
-
+        self.tableWidgetBuscar.show()
         self.Buscar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_2))
         self.Editar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_3))
         self.Eliminar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_6))
@@ -537,6 +537,7 @@ class Gui(QMainWindow):
         self.ComboBuscar.hide()
         self.PrioridadBuscar.hide()
         self.WidgetBuscar.hide()
+        self.tableWidgetBuscar.show()
 
     def buscarTareas(self):
         self.tableWidgetBuscar.show()
