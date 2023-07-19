@@ -9,14 +9,8 @@ def agregar_tarea(titulo, desc, fec_venc,fecha_hoy, prioridad, numero):
     conexion.commit()
 
 def completar_tarea(titulo):
-    resultado = conexion.execute("SELECT * FROM tareas WHERE titulo=?", (titulo,))
-    status = resultado.fetchone()
-
-    if (status[4] == 'pendiente'):
-            conexion.execute("UPDATE tareas SET estado='completa' WHERE titulo=?", (titulo,))
-            conexion.commit()
-
-
+    conexion.execute("UPDATE tareas SET estado='completa' WHERE titulo=?", (titulo,))
+    conexion.commit()
 
 def tareas_pendientes():
     result = conexion.execute("SELECT * FROM tareas WHERE estado='pendiente'")
@@ -155,6 +149,7 @@ def vencimientos():
     b = 0
     c = []
     d = []
+    e = []
     actualizar(fecha_actual)
     todo = todas()
     if todo:
@@ -179,9 +174,10 @@ def vencimientos():
             if (tareas_por_vencer <= 168 and tareas[5] == 'pendiente'):
                 if (tareas_por_vencer <= 24 and tareas_por_vencer >= 0):
                     b += 1
+                    e.append(tareas[0])
                 d.append(total)
                 c.append(tareas[0])
-        return a, b, c, d
+        return a, b, c, d, e
 
 def delete(titulo):
     resultado=busqueda(titulo)

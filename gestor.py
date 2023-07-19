@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, \
     QAbstractItemView, QTableWidgetItem, QGraphicsView, QGraphicsScene, QGraphicsTextItem, QMenu, QSystemTrayIcon, \
     QMessageBox, QGraphicsDropShadowEffect, QHeaderView
 from PyQt5.QtCore import QDate, QTimer, Qt, QTime
-from PyQt5.QtGui import QFont, QIcon, QColor
+from PyQt5.QtGui import QFont, QIcon, QColor, QBrush
 from PyQt5 import QtCore, QtWidgets
 
 
@@ -24,6 +24,7 @@ class Gui(QMainWindow):
         self.LabelMsj.hide()
         self.limite_caja_texto()
 
+        self.Agregar.clicked.connect(self.ocultar_labels)
         self.TituloAgregar.textChanged.connect(self.check_text)
         self.DescripcionAgregar.textChanged.connect(self.check_text)
 
@@ -148,6 +149,15 @@ class Gui(QMainWindow):
         self.notificacion()
         self.BotonAgregarT.clicked.connect(self.notificacion)
 
+    def ocultar_labels(self):
+        self.label_8.hide()
+        self.label_9.hide()
+        self.label_10.hide()
+
+    def mostrar_labels(self):
+        self.label_8.show()
+        self.label_9.show()
+        self.label_10.show()
     def establecer_sombras(self):
             elementos = [
                 self.stackedWidget,
@@ -220,7 +230,7 @@ class Gui(QMainWindow):
     def cambiarHorario(self):
         fecha = self.calendarWidgetAgregar.selectedDate()
         if fecha_actual == fecha:
-            self.HyMedit.setMinimumTime(QTime.currentTime().addSecs(3600))
+            self.HyMedit.setMinimumTime(QTime.currentTime().addSecs(7200))
         else:
             self.HyMedit.setMinimumTime(QTime(0, 0))
 
@@ -260,6 +270,7 @@ class Gui(QMainWindow):
     def verTodo(self):
         self.tableWidgetBuscar.setRowCount(0)
         self.tableWidgetBuscar.show()
+        self.mostrar_labels()
         res = todas()
         try:
             self.imprimir_tuplas(res)
@@ -297,6 +308,7 @@ class Gui(QMainWindow):
         self.tableWidgetBuscar.setRowCount(0)
         self.tableWidgetBuscar.show()
         self.TareasEliminar.clear()
+        self.mostrar_labels()
         res = todas()
         if res:
             self.BotonEliminarT.setEnabled(True)
@@ -333,6 +345,7 @@ class Gui(QMainWindow):
         self.tableWidgetBuscar.setRowCount(0)
         self.tableWidgetBuscar.show()
         self.TareaCompletar.clear()
+        self.mostrar_labels()
         try:
             res = solo_no_completas()
             self.imprimir_tuplas(res)
@@ -352,7 +365,7 @@ class Gui(QMainWindow):
         text = self.TareaCompletar.currentText()
         try:
             result = busqueda(text)
-            if result[4] == 'pendiente':
+            if result[5] == 'pendiente':
                 completar_tarea(text)
                 self.imprimir_tuplas(result)
                 self.LabelMsj.setStyleSheet('color:blue; border:0px')
@@ -396,6 +409,7 @@ class Gui(QMainWindow):
 
     def completas(self):
         result = tareas_completas()
+        self.mostrar_labels()
         try:
             self.imprimir_tuplas(result)
         except ValueError:
@@ -406,6 +420,7 @@ class Gui(QMainWindow):
 
     def pendientes(self):
         result = tareas_pendientes()
+        self.mostrar_labels()
         try:
             self.tableWidgetBuscar.setRowCount(0)
             self.tableWidgetBuscar.show()
@@ -422,6 +437,7 @@ class Gui(QMainWindow):
         self.PrioridadEdit.hide()
         self.calendarWidgetEditar.hide()
         self.TimeEditar.hide()
+        self.mostrar_labels()
 
     def habilitarBoton2(self):
         text = self.ComboEditar.currentText()
@@ -540,6 +556,7 @@ class Gui(QMainWindow):
         self.PrioridadBuscar.hide()
         self.WidgetBuscar.hide()
         self.tableWidgetBuscar.show()
+        self.mostrar_labels()
 
     def buscarTareas(self):
         self.tableWidgetBuscar.show()
@@ -572,8 +589,9 @@ class Gui(QMainWindow):
         try:
             self.imprimir_tuplas(resultado)
             res=solo_no_completas()
-            for datos in enumerate(res):
-                self.ComboEditar.addItem(str(datos[1][0]))
+            if res:
+                for datos in enumerate(res):
+                    self.ComboEditar.addItem(str(datos[1][0]))
         except ValueError:
             self.tableWidgetBuscar.setRowCount(0)
             self.LabelMsj.setStyleSheet('color:red; border:0px')
@@ -589,19 +607,31 @@ class Gui(QMainWindow):
             self.tableWidgetBuscar.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)  # +
             self.tableWidgetBuscar.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
             for i in range(6):
-                self.tableWidgetBuscar.setColumnWidth(i, 150)
+                self.tableWidgetBuscar.setColumnWidth(i, 250)
             if isinstance(tupla, tuple):
                 self.tableWidgetBuscar.setRowCount(1)  # Establecer el número de filas
                 datos = tupla  # Obtengo la única fila de la tupla
                 for columna, dato in enumerate(datos):
                     item = QTableWidgetItem(str(dato))
                     self.tableWidgetBuscar.setItem(0, columna, item)
+                    if "vencida" in datos:
+                        item.setForeground(QColor(170, 0, 0))
+                    if "completa" in datos:
+                        item.setForeground(QColor(0, 85, 0))
+                    if "pendiente" in datos:
+                        item.setForeground(QColor(255, 170, 0))
             else:
                 self.tableWidgetBuscar.setRowCount(len(tupla))
                 for fila, datos in enumerate(tupla):
                     for columna, dato in enumerate(datos):
                         item = QTableWidgetItem(str(dato))
                         self.tableWidgetBuscar.setItem(fila, columna, item)
+                        if "vencida" in datos:
+                            item.setForeground(QColor(170, 0, 0))
+                        if "completa" in datos:
+                            item.setForeground(QColor(0, 85, 0))
+                        if "pendiente" in datos:
+                            item.setForeground(QColor(255, 170, 0))
 
             self.tableWidgetBuscar.show()
         else:
@@ -611,6 +641,7 @@ class Gui(QMainWindow):
         self.ComboBuscar.show()
         self.PrioridadBuscar.hide()
         self.WidgetBuscar.hide()
+
 
     def prioriB(self):
         self.ComboBuscar.hide()
