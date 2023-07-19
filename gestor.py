@@ -17,10 +17,10 @@ class Gui(QMainWindow):
     def __init__(self):
         super(Gui, self).__init__()
         loadUi("proyecto_tareas.ui", self)
+
         hora = QTime.currentTime().addSecs(7200)
         self.actualizarFecha()
 
-        self.tableWidgetBuscar.hide()
         self.LabelMsj.hide()
         self.limite_caja_texto()
 
@@ -111,14 +111,12 @@ class Gui(QMainWindow):
         self.TareasEliminar.activated.connect(self.MostrarTareaEliminar)
         self.BotonEliminarT.clicked.connect(self.eliminarTarea)
 
-
         self.BotonAgregarT.clicked.connect(self.comprobarTareas)
         self.BotonEditarT.clicked.connect(self.comprobarTareas)
         self.Todas.clicked.connect(self.verTodo)
         self.header_clicked = [False] * self.tableWidgetBuscar.columnCount()
         self.tableWidgetBuscar.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.BotonTodo.clicked.connect(self.EliminarTodo)
-
 
         self.graphics_view = QGraphicsView(self.frame_8)
         self.graphics_view.setGeometry(0, 0, 450, 130)
@@ -160,9 +158,9 @@ class Gui(QMainWindow):
         self.label_8.show()
         self.label_9.show()
         self.label_10.show()
+
     def establecer_sombras(self):
             elementos = [
-                self.stackedWidget,
                 self.Agregar,
                 self.Buscar,
                 self.Completar,
@@ -227,7 +225,6 @@ class Gui(QMainWindow):
                 self.comprobarTareas()
                 self.BotonTodo.setEnabled(False)
                 self.BotonEliminarT.setEnabled(False)
-
 
     def cambiarHorario(self):
         fecha = self.calendarWidgetAgregar.selectedDate()
@@ -385,8 +382,6 @@ class Gui(QMainWindow):
             self.LabelMsj.setText('No hay tareas para completar')
             self.LabelMsj.show()
 
-
-
     def actualizarTareas(self):
         vencen = vencimientos()
         mensaje = mostrar_vencidas(vencen[0], vencen[1], vencen[2], vencen[3])
@@ -407,7 +402,6 @@ class Gui(QMainWindow):
     def completarT(self):
         text = self.TareaCompletar.currentText()
         self.BotonCompletarT.setEnabled(bool(text))
-
 
     def completas(self):
         result = tareas_completas()
@@ -483,7 +477,6 @@ class Gui(QMainWindow):
                 opcion = "4"
 
             self.comprobar(opcion)
-
 
             if opcion == "3":
                 actualizar(fecha_actual)
@@ -608,8 +601,6 @@ class Gui(QMainWindow):
             self.tableWidgetBuscar.setColumnCount(6)  # Establecer el número de columnas
             self.tableWidgetBuscar.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)  # +
             self.tableWidgetBuscar.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
-            for i in range(6):
-                self.tableWidgetBuscar.setColumnWidth(i, 250)
             if isinstance(tupla, tuple):
                 self.tableWidgetBuscar.setRowCount(1)  # Establecer el número de filas
                 datos = tupla  # Obtengo la única fila de la tupla
@@ -622,6 +613,9 @@ class Gui(QMainWindow):
                         item.setForeground(QColor(0, 85, 0))
                     if "pendiente" in datos:
                         item.setForeground(QColor(255, 170, 0))
+                    if "vencida" in datos or "pendiente" in datos:
+                        if str(dato) == "ALTA":
+                            item.setForeground(QColor(170, 0, 0))
             else:
                 self.tableWidgetBuscar.setRowCount(len(tupla))
                 for fila, datos in enumerate(tupla):
@@ -782,7 +776,6 @@ class Gui(QMainWindow):
 
     def cerrarBd(self):
         conexion.close()
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
