@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, \
     QAbstractItemView, QTableWidgetItem, QGraphicsView, QGraphicsScene, QGraphicsTextItem, QMenu, QSystemTrayIcon, \
     QMessageBox, QGraphicsDropShadowEffect, QHeaderView
 from PyQt5.QtCore import QDate, QTimer, Qt, QTime
-from PyQt5.QtGui import QFont, QIcon, QColor
+from PyQt5.QtGui import QFont, QIcon, QColor, QCursor
 from PyQt5 import QtCore, QtWidgets
 
 
