@@ -734,12 +734,12 @@ class Gui(QMainWindow):
         self.MaximizeButton.show()
 
     def limite_caja_texto(self):
-        self.TituloAgregar.setPlaceholderText("Ingrese un titulo")
+        self.TituloAgregar.setPlaceholderText("Ingrese un titulo...")
         self.TituloAgregar.setMaxLength(20)
-        self.DescripcionAgregar.setPlaceholderText("Ingrese una descripcion")
-        self.TituloEdit_2.setPlaceholderText("Ingrese un titulo")
+        self.DescripcionAgregar.setPlaceholderText("Ingrese una descripcion...")
+        self.TituloEdit_2.setPlaceholderText("Ingrese un titulo...")
         self.TituloEdit_2.setMaxLength(20)
-        self.DescripcionEdit.setPlaceholderText("Ingrese una descripcion")
+        self.DescripcionEdit.setPlaceholderText("Ingrese una descripcion...")
 
     def cerrarBd(self):
         conexion.close()

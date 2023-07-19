@@ -418,7 +418,7 @@ QTimeEdit::up-button, QTimeEdit::down-button {
 }</string>
                           </property>
                           <property name="currentIndex">
-                           <number>6</number>
+                           <number>4</number>
                           </property>
                           <widget class="QWidget" name="page_1">
                            <layout class="QGridLayout" name="gridLayout_3">
@@ -846,11 +846,11 @@ selection-background-color: rgb(85, 85, 255);</string>
                              </widget>
                             </item>
                             <item>
-                             <layout class="QGridLayout" name="gridLayout_15">
+                             <layout class="QHBoxLayout" name="horizontalLayout_23">
                               <property name="leftMargin">
                                <number>10</number>
                               </property>
-                              <item row="0" column="0">
+                              <item>
                                <widget class="QRadioButton" name="SelectTitulo">
                                 <property name="maximumSize">
                                  <size>
@@ -866,23 +866,7 @@ selection-background-color: rgb(85, 85, 255);</string>
                                 </property>
                                </widget>
                               </item>
-                              <item row="0" column="1">
-                               <widget class="QRadioButton" name="SelectFechaVencimiento">
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>16777215</width>
-                                  <height>16777215</height>
-                                 </size>
-                                </property>
-                                <property name="cursor">
-                                 <cursorShape>PointingHandCursor</cursorShape>
-                                </property>
-                                <property name="text">
-                                 <string>Fecha de vencimiento</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item row="0" column="2">
+                              <item>
                                <widget class="QRadioButton" name="SelectPrioridad">
                                 <property name="maximumSize">
                                  <size>
@@ -895,6 +879,22 @@ selection-background-color: rgb(85, 85, 255);</string>
                                 </property>
                                 <property name="text">
                                  <string>Prioridad</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QRadioButton" name="SelectFechaVencimiento">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>16777215</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="cursor">
+                                 <cursorShape>PointingHandCursor</cursorShape>
+                                </property>
+                                <property name="text">
+                                 <string>Fecha de vencimiento</string>
                                 </property>
                                </widget>
                               </item>
