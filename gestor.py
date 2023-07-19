@@ -6,7 +6,7 @@ import sys
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow, QApplication, \
     QAbstractItemView, QTableWidgetItem, QGraphicsView, QGraphicsScene, QGraphicsTextItem, QMenu, QSystemTrayIcon, \
-    QMessageBox, QGraphicsDropShadowEffect
+    QMessageBox, QGraphicsDropShadowEffect, QHeaderView
 from PyQt5.QtCore import QDate, QTimer, Qt, QTime
 from PyQt5.QtGui import QFont, QIcon, QColor
 from PyQt5 import QtCore, QtWidgets
@@ -584,6 +584,8 @@ class Gui(QMainWindow):
             self.LabelMsj.hide()
             self.tableWidgetBuscar.setRowCount(0)
             self.tableWidgetBuscar.setColumnCount(6)  # Establecer el número de columnas
+            self.tableWidgetBuscar.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)  # +
+            self.tableWidgetBuscar.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
             for i in range(6):
                 self.tableWidgetBuscar.setColumnWidth(i, 150)
             if isinstance(tupla, tuple):
@@ -591,23 +593,13 @@ class Gui(QMainWindow):
                 datos = tupla  # Obtengo la única fila de la tupla
                 for columna, dato in enumerate(datos):
                     item = QTableWidgetItem(str(dato))
-                    dato_str = str(dato)
-                    if len(dato_str) >= 20:
-                        self.tableWidgetBuscar.setRowHeight(0, (len(str(dato))))
-                        self.tableWidgetBuscar.setItem(0, columna, item)
-                    else:
-                        self.tableWidgetBuscar.setItem(0, columna, item)
+                    self.tableWidgetBuscar.setItem(0, columna, item)
             else:
                 self.tableWidgetBuscar.setRowCount(len(tupla))
                 for fila, datos in enumerate(tupla):
                     for columna, dato in enumerate(datos):
                         item = QTableWidgetItem(str(dato))
-                        dato_str=str(dato)
-                        if len(dato_str) >= 20:
-                            self.tableWidgetBuscar.setRowHeight(fila,(len(str(dato)))+20)
-                            self.tableWidgetBuscar.setItem(fila, columna, item)
-                        else:
-                            self.tableWidgetBuscar.setItem(fila, columna, item)
+                        self.tableWidgetBuscar.setItem(fila, columna, item)
 
             self.tableWidgetBuscar.show()
         else:

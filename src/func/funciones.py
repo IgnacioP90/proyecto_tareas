@@ -225,7 +225,7 @@ def resultado_desc(desc):
     for caracter in desc:
         resultado += caracter
         contador += 1
-        if contador == 20:
+        if contador == 22:
             resultado += '\n'
             contador = 0
     return resultado
