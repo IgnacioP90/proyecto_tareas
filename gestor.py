@@ -118,7 +118,7 @@ class Gui(QMainWindow):
 
 
         self.graphics_view = QGraphicsView(self.frame_8)
-        self.graphics_view.setGeometry(0, 0, 400, 120)
+        self.graphics_view.setGeometry(0, 0, 450, 130)
         self.scene = QGraphicsScene(self)
         self.graphics_view.setScene(self.scene)
         self.graphics_view.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -136,7 +136,7 @@ class Gui(QMainWindow):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.scroll_text)
-        self.timer.start(50)
+        self.timer.start(18)
         self.comprobarTareas()
 
         self.ExitButton.clicked.connect(self.cerrarBd)
@@ -382,9 +382,9 @@ class Gui(QMainWindow):
 
     def scroll_text(self):
         pos_y = self.text_item.pos().y()
-        height = self.frame_8.height()
+        height = self.frame_8.height()*2
         if pos_y < -height:
-            pos_y = self.frame_8.height()
+            pos_y = height
         else:
             pos_y -= 1
         self.text_item.setPos(self.text_item.pos().x(), pos_y)
