@@ -135,7 +135,7 @@ class Gui(QMainWindow):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.scroll_text)
-        self.timer.start(18)
+        self.timer.start(30)
         self.comprobarTareas()
 
         self.ExitButton.clicked.connect(self.cerrarBd)
