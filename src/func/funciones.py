@@ -31,7 +31,7 @@ def editar_tarea(titulo, variable, opcion):
     # sino no hago nada
     tarea = conexion.execute("SELECT * FROM tareas WHERE titulo=?", (titulo,))
     data = tarea.fetchone()
-    if (data[4] != 'completa'):
+    if (data[5] != 'completa'):
         match (opcion):
             case "1":
                 conexion.execute("UPDATE tareas SET titulo=? WHERE titulo=?", (variable, titulo))
@@ -174,7 +174,7 @@ def vencimientos():
                     total = f"{dias} dias y {minutos} minutos"
                 else:
                     total = f"{dias} dias {horas} hs y {minutos} minutos"
-            if (tareas[4] == 'vencida'):
+            if (tareas[5] == 'vencida'):
                 a += 1
             if (tareas_por_vencer <= 168 and tareas[5] == 'pendiente'):
                 if (tareas_por_vencer <= 24 and tareas_por_vencer >= 0):
@@ -200,8 +200,10 @@ def cantidad_dias(fec_venc, limite):
 
 def mostrar_vencidas(vencidas=None, vencen_1=None, titulos=None, vencen=None):
     mensaje = ""
-    if vencidas >= 1:
-        mensaje += f"Tienes {vencidas} tarea(s) vencida(s). Tienes la posibilidad de editar la fecha si así lo deseas.\n"
+    if vencidas == 1:
+        mensaje += f"Tienes {vencidas} tarea vencida. Tienes la posibilidad de editar la fecha si así lo deseas.\n"
+    elif vencidas > 1:
+        mensaje += f"Tienes {vencidas} tareas vencidas. Tienes la posibilidad de editar la fecha si así lo deseas.\n"
     else:
         mensaje += "Felicidades, no tienes tareas vencidas!\n"
     mensaje += f"Cantidad de tareas que vencen en un día: {vencen_1}\n"

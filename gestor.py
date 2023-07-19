@@ -407,6 +407,8 @@ class Gui(QMainWindow):
     def pendientes(self):
         result = tareas_pendientes()
         try:
+            self.tableWidgetBuscar.setRowCount(0)
+            self.tableWidgetBuscar.show()
             self.imprimir_tuplas(result)
         except ValueError:
             self.tableWidgetBuscar.setRowCount(0)
@@ -572,7 +574,6 @@ class Gui(QMainWindow):
             res=solo_no_completas()
             for datos in enumerate(res):
                 self.ComboEditar.addItem(str(datos[1][0]))
-            self.BotonEditarT.setEnabled(True)
         except ValueError:
             self.tableWidgetBuscar.setRowCount(0)
             self.LabelMsj.setStyleSheet('color:red; border:0px')
