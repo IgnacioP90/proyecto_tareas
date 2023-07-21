@@ -32,7 +32,7 @@ nombre_del_entorno_virtual\Scripts\activate
 Linux:
 source nombre_del_entorno_virtual\bin\activate
 
-luego instalar python y pyqt5
+luego instalar python y PyQt5
 
 ## Contribución
 
