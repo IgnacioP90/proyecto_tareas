@@ -19,12 +19,14 @@ Este proyecto Gestor de Tareas es una aplicación que permite al usuario adminis
 
 Una vez que hayas instalado y ejecutado el proyecto, puedes seguir estos pasos para utilizar el gestor de tareas:
 
-1. Abre el gestor de tareas en tu terminal o línea de comandos.
+1. ejecuta el archivo gestor.py.
 
-2. Sigue las instrucciones en pantalla para crear una nueva tarea, marcar una tarea como completada, editar una tarea existente y eliminar.
+2. Se abrira una ventana del programa con el menu.
+
+Puedes crear un entorno virtual para que sea mas comodo.
 
 ## Contribución
 
-¡Las contribuciones son bienvenidas! Si deseas contribuir a este proyecto, puedes hacerlo con total libertad, actualmente se creo la interfaz con Pyqt5.
+Las contribuciones son bienvenidas, Si deseas contribuir a este proyecto, puedes hacerlo con total libertad, actualmente se creo la interfaz con Pyqt5.
 
 

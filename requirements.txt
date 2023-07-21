@@ -1,2 +1,1 @@
-pyqt5
-cryptography
+pyqt5==5.15.4
