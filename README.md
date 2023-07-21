@@ -23,7 +23,16 @@ Una vez que hayas instalado y ejecutado el proyecto, puedes seguir estos pasos p
 
 2. Se abrira una ventana del programa con el menu.
 
-Puedes crear un entorno virtual para que sea mas comodo.
+Puedes crear un entorno virtual para que sea mas comodo navegando hacia la carpeta raiz del proyecto.
+python -m venv nombre_del_entorno_virtual
+
+Para activar el entorno virtual en windows:
+nombre_del_entorno_virtual\Scripts\activate
+
+Linux:
+source nombre_del_entorno_virtual\bin\activate
+
+luego instalar python y pyqt5
 
 ## Contribución
 
