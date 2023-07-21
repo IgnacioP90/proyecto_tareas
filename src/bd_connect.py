@@ -1,7 +1,6 @@
 
 import sqlite3
-
-conexion = sqlite3.connect('./src/bd1.db')
+conexion = sqlite3.connect('bd1.db')
 cursor = conexion.cursor()
 
 try:

@@ -1479,7 +1479,6 @@ QTableView::item:selected
 	background-color: rgb(33, 47, 255);
 	color: #FFFFFF; 
 }
-
 </string>
                                 </property>
                                 <property name="alternatingRowColors">
