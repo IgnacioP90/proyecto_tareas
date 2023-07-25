@@ -401,6 +401,8 @@ class Gui(QMainWindow):
         self.BotonCompletarT.setEnabled(bool(text))
 
     def completas(self):
+        self.tableWidgetBuscar.setRowCount(0)
+        self.tableWidgetBuscar.show()
         result = tareas_completas()
         self.mostrar_labels()
         try:
