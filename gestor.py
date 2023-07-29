@@ -16,7 +16,7 @@ class Gui(QMainWindow):
         super(Gui, self).__init__()
         loadUi("proyecto_tareas.ui", self)
 
-        hora = QTime.currentTime().addSecs(7200)
+
         self.actualizarFecha()
 
         self.LabelMsj.hide()
@@ -29,9 +29,7 @@ class Gui(QMainWindow):
         self.BotonAgregarT.setEnabled(False)
         self.DescripcionAgregar.textChanged.connect(self.cambiarBoton)
         self.TituloAgregar.textChanged.connect(self.cambiarBoton)
-        self.HyMedit.setTime(hora)
-        self.HyMedit.timeChanged.connect(self.cambiarHorario)
-        self.calendarWidgetAgregar.clicked.connect(self.cambiarHorario)
+        self.actualizarHora()
 
         self.MaximizeButton.hide()
         self.MinimizeButton.clicked.connect(self.ctrl_minimize)
@@ -142,7 +140,7 @@ class Gui(QMainWindow):
         icon = QIcon(self.app_path + "/app.ico")
         self.tray_icon = QSystemTrayIcon(icon, app)
         menu = QMenu()
-        self.tray_icon.setContextMenu(menu)
+        self.tray_icon.setContextMenu(menu) #configuro aqui la notificacion, con su icono y el tiempo que este activa
         self.notificacion()
         self.BotonAgregarT.clicked.connect(self.notificacion)
 
@@ -150,6 +148,8 @@ class Gui(QMainWindow):
         self.label_8.hide()
         self.label_9.hide()
         self.label_10.hide()
+        self.actualizarFecha()
+        self.actualizarHora()
 
     def mostrar_labels(self):
         self.label_8.show()
@@ -174,6 +174,11 @@ class Gui(QMainWindow):
                 sombra.setYOffset(10)
                 sombra.setColor(QColor(10, 100, 100, 200))
                 elemento.setGraphicsEffect(sombra)
+
+    def actualizarHora(self):
+        hora = QTime.currentTime().addSecs(7200)
+        self.HyMedit.setTime(hora)
+        self.HyMedit.timeChanged.connect(self.cambiarHorario)
 
     def actualizarFecha(self):
         fecha_actual = QDate.currentDate()
