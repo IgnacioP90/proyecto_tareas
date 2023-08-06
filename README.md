@@ -1,41 +1,55 @@
-# proyecto_tareas
+Gestor de Tareas
+Este proyecto Gestor de Tareas es una aplicación que permite al usuario administrar sus tareas de
+manera efectiva. Al ejecutar la aplicación, se mostrará un menú con diferentes opciones, como agregar
+una nueva tarea, editar una tarea existente, marcar una tarea como completada, ver la lista de tareas 
+pendientes, ver la lista de tareas completadas, buscar tareas por criterios específicos, entre otros.
 
-Este proyecto Gestor de Tareas es una aplicación que permite al usuario administrar sus tareas de manera efectiva. Al ejecutar la aplicación, se mostrará un menú con diferentes opciones, como agregar una nueva tarea, editar una tarea existente, marcar una tarea como completada, ver la lista de tareas pendientes, ver la lista de tareas completadas, buscar tareas por criterios específicos, entre otros.
+Puedes utilizar la IDE pycharm, ya que esta creado para ejecutar codigo creado en el lenguaje python.
 
-## Requisitos
+**Requisitos**
+Antes de ejecutar la aplicación, asegúrate de tener instalados los siguientes componentes:
 
-- Python 3.10 o superior
-- PyQt5
+Python 3.10 o superior: Descargar e Instalar Python
+PyQt5: Para instalar PyQt5, puedes usar el gestor de paquetes pip:
 
-## Instalación
+pip install PyQt5 (previamente, tener instalado python 3) 
 
-1. Clona este repositorio en tu máquina local
+**Instalación**
+Clona este repositorio en tu máquina local.
+git clone https://github.com/IgnacioP90/proyecto_tareas
+Navega al directorio del proyecto.
+cd proyecto_tareas
+Opcional: Crea un entorno virtual para el proyecto (recomendado).
 
-2. Navega al directorio del proyecto
+# En Windows
+python -m venv venv
 
-3. Ejecuta el script principal
+# En macOS y Linux
+python3 -m venv venv
+Opcional: Activa el entorno virtual.
 
-## Uso
+# En Windows
+venv\Scripts\activate
 
-Una vez que hayas instalado y ejecutado el proyecto, puedes seguir estos pasos para utilizar el gestor de tareas:
+# En macOS y Linux
+source venv/bin/activate
+Instala PyQt5 si no lo has hecho previamente.
+pip install PyQt5
 
-1. ejecuta el archivo gestor.py.
+**Uso**
+Una vez que hayas instalado y configurado el entorno virtual (si lo deseas), sigue estos pasos 
+para utilizar el gestor de tareas:
+Ejecuta el archivo gestor.py
+python gestor.py
+Se abrirá una ventana del programa con el menú.
 
-2. Se abrira una ventana del programa con el menu.
+**Contribución**
+Las contribuciones son bienvenidas. Si deseas contribuir a este proyecto, puedes hacerlo con 
+total libertad. Actualmente, la interfaz se creó utilizando PyQt5.
 
-Puedes crear un entorno virtual para que sea mas comodo navegando hacia la carpeta raiz del proyecto.
-python -m venv nombre_del_entorno_virtual
-
-Para activar el entorno virtual en windows:
-nombre_del_entorno_virtual\Scripts\activate
-
-Linux:
-source nombre_del_entorno_virtual\bin\activate
-
-luego instalar python y PyQt5
-
-## Contribución
-
-Las contribuciones son bienvenidas, Si deseas contribuir a este proyecto, puedes hacerlo con total libertad, actualmente se creo la interfaz con Pyqt5.
+**Problemas y Mejoras**
+Si encuentras algún problema o tienes alguna idea para mejorar la aplicación, por favor, abre 
+un issue en GitHub. Estaré encantado de recibir tus comentarios y sugerencias para hacer el 
+Gestor de Tareas aún mejor.
 
 
