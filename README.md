@@ -39,7 +39,7 @@ pip install PyQt5
 **Uso**
 Una vez que hayas instalado y configurado el entorno virtual (si lo deseas), sigue estos pasos 
 para utilizar el gestor de tareas:
-Ejecuta el archivo gestor.py
+Ejecuta el archivo gestor.py.
 python gestor.py
 Se abrirá una ventana del programa con el menú.
 
