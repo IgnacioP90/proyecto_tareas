@@ -217,7 +217,6 @@ def solo_no_completas():
 def resultado_desc(desc):
     contador = 0
     resultado = ""
-
     for caracter in desc:
             resultado += caracter
             contador += 1
