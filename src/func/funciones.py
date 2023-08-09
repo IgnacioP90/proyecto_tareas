@@ -217,10 +217,14 @@ def solo_no_completas():
 def resultado_desc(desc):
     contador = 0
     resultado = ""
+
     for caracter in desc:
-        resultado += caracter
-        contador += 1
-        if contador == 22:
-            resultado += '\n'
-            contador = 0
+            resultado += caracter
+            contador += 1
+            if contador >= 22 and caracter==" ":
+                    resultado += '\n'
+                    contador=0
+            elif contador >=30:
+                resultado += '\n'
+                contador = 0
     return resultado
