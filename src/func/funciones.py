@@ -223,7 +223,4 @@ def resultado_desc(desc):
             if contador >= 22 and caracter==" ":
                     resultado += '\n'
                     contador=0
-            elif contador >=30:
-                resultado += '\n'
-                contador = 0
     return resultado
