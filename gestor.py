@@ -11,11 +11,11 @@ from PyQt5.QtCore import QDate, QTimer, Qt, QTime
 from PyQt5.QtGui import QFont, QIcon, QColor
 from PyQt5 import QtCore, QtWidgets
 
+
 class Gui(QMainWindow):
     def __init__(self):
         super(Gui, self).__init__()
         loadUi("proyecto_tareas.ui", self)
-
 
         self.actualizarFecha()
 
@@ -64,7 +64,7 @@ class Gui(QMainWindow):
         self.Completas.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_4))
         self.Pendientes.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_4))
         self.Todas.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_4))
-        #self.Buscar.clicked.connect(lambda: self.BotonBuscarT.setEnabled(False))
+        # self.Buscar.clicked.connect(lambda: self.BotonBuscarT.setEnabled(False))
         self.Buscar.clicked.connect(self.ocultar)
         self.SelectTitulo.clicked.connect(self.tituloB)
         self.SelectPrioridad.clicked.connect(self.prioriB)
@@ -140,7 +140,7 @@ class Gui(QMainWindow):
         icon = QIcon(self.app_path + "/app.ico")
         self.tray_icon = QSystemTrayIcon(icon, app)
         menu = QMenu()
-        self.tray_icon.setContextMenu(menu) #configuro aqui la notificacion, con su icono y el tiempo que este activa
+        self.tray_icon.setContextMenu(menu)  # configuro aqui la notificacion, con su icono y el tiempo que este activa
         self.notificacion()
         self.BotonAgregarT.clicked.connect(self.notificacion)
 
@@ -157,23 +157,23 @@ class Gui(QMainWindow):
         self.label_10.show()
 
     def establecer_sombras(self):
-            elementos = [
-                self.Agregar,
-                self.Buscar,
-                self.Completar,
-                self.Editar,
-                self.Completas,
-                self.Pendientes,
-                self.Eliminar,
-                self.Todas
-            ]
-            for elemento in elementos:
-                sombra = QGraphicsDropShadowEffect(self)
-                sombra.setBlurRadius(40)
-                sombra.setXOffset(10)
-                sombra.setYOffset(10)
-                sombra.setColor(QColor(10, 100, 100, 200))
-                elemento.setGraphicsEffect(sombra)
+        elementos = [
+            self.Agregar,
+            self.Buscar,
+            self.Completar,
+            self.Editar,
+            self.Completas,
+            self.Pendientes,
+            self.Eliminar,
+            self.Todas
+        ]
+        for elemento in elementos:
+            sombra = QGraphicsDropShadowEffect(self)
+            sombra.setBlurRadius(40)
+            sombra.setXOffset(10)
+            sombra.setYOffset(10)
+            sombra.setColor(QColor(10, 100, 100, 200))
+            elemento.setGraphicsEffect(sombra)
 
     def actualizarHora(self):
         hora = QTime.currentTime().addSecs(7200)
@@ -183,7 +183,7 @@ class Gui(QMainWindow):
     def actualizarFecha(self):
         fecha_actual = QDate.currentDate()
         if QTime.currentTime() >= QTime(22, 0):
-            fecha_actual=fecha_actual.addDays(1)
+            fecha_actual = fecha_actual.addDays(1)
         self.calendarWidgetAgregar.setMinimumDate(fecha_actual)
 
     def sombra_frame(self, frame):
@@ -199,12 +199,14 @@ class Gui(QMainWindow):
         if res:
             e = self.actualizarTareas()
             if e > 0:
-                if e==1:
+                if e == 1:
                     self.tray_icon.show()
-                    self.tray_icon.showMessage("Gestor de tareas", f"tienes {e} tarea que vence en menos de un dia", 5000)
+                    self.tray_icon.showMessage("Gestor de tareas", f"tienes {e} tarea que vence en menos de un dia",
+                                               5000)
                 else:
                     self.tray_icon.show()
-                    self.tray_icon.showMessage("Gestor de tareas", f"tienes {e} tareas que vencen en menos de un dia", 5000)
+                    self.tray_icon.showMessage("Gestor de tareas", f"tienes {e} tareas que vencen en menos de un dia",
+                                               5000)
 
     def EliminarTodo(self):
         msg = QMessageBox()
@@ -235,7 +237,7 @@ class Gui(QMainWindow):
         else:
             self.HyMedit.setMinimumTime(QTime(0, 0))
 
-    def mostrar_tarea(self,texto):
+    def mostrar_tarea(self, texto):
         self.tableWidgetBuscar.setRowCount(0)
         self.tableWidgetBuscar.show()
         if texto:
@@ -350,7 +352,7 @@ class Gui(QMainWindow):
         try:
             res = solo_no_completas()
             self.imprimir_tuplas(res)
-            pen=tareas_pendientes()
+            pen = tareas_pendientes()
             for datos in enumerate(pen):
                 self.TareaCompletar.addItem(str(datos[1][0]))
             self.BotonCompletarT.setEnabled(True)
@@ -373,13 +375,15 @@ class Gui(QMainWindow):
                 self.LabelMsj.setText('Se mostrara la tarea a completar')
                 self.LabelMsj.show()
                 self.TareaCompletar.clear()
-                res=tareas_pendientes()
+                res = tareas_pendientes()
                 if res:
                     for datos in enumerate(res):
                         self.TareaCompletar.addItem(str(datos[1][0]))
                 else:
                     self.BotonCompletarT.setEnabled(False)
-        except Exception as e:
+                self.actualizarTareas()
+
+        except Exception:
             self.LabelMsj.setStyleSheet('color:red; border:0px')
             self.LabelMsj.setText('No hay tareas para completar')
             self.LabelMsj.show()
@@ -394,7 +398,7 @@ class Gui(QMainWindow):
 
     def scroll_text(self):
         pos_y = self.text_item.pos().y()
-        height = self.frame_8.height()*2
+        height = self.frame_8.height() * 2
         if pos_y < -height:
             pos_y = height
         else:
@@ -491,7 +495,7 @@ class Gui(QMainWindow):
             self.LabelMsj.setText('La tarea se edito correctamente')
             self.LabelMsj.show()
             self.ComboEditar.clear()
-            noCompletas=solo_no_completas()
+            noCompletas = solo_no_completas()
             for datos in enumerate(noCompletas):
                 self.ComboEditar.addItem(str(datos[1][0]))
             # la tarea se edito sin errores.
@@ -527,7 +531,6 @@ class Gui(QMainWindow):
             case "4":
                 variable = self.PrioridadEdit.currentText()
         editar_tarea(titulo, variable, opcion)
-
 
     def mostrarDescriptEdit(self):
         self.TituloEdit_2.hide()
@@ -587,7 +590,7 @@ class Gui(QMainWindow):
         resultado = todas()
         try:
             self.imprimir_tuplas(resultado)
-            res=solo_no_completas()
+            res = solo_no_completas()
             if res:
                 for datos in enumerate(res):
                     self.ComboEditar.addItem(str(datos[1][0]))
@@ -649,7 +652,6 @@ class Gui(QMainWindow):
         self.PrioridadBuscar.hide()
         self.WidgetBuscar.hide()
 
-
     def prioriB(self):
         self.ComboBuscar.hide()
         self.PrioridadBuscar.show()
@@ -665,8 +667,8 @@ class Gui(QMainWindow):
         tedit = self.TituloEdit_2.text()
         dedit = self.DescripcionEdit.toPlainText()
         desc = self.DescripcionAgregar.toPlainText()
-        text,desc = self.es_vacio(text,desc)
-        tedit,dedit=self.es_vacio(tedit,dedit)
+        text, desc = self.es_vacio(text, desc)
+        tedit, dedit = self.es_vacio(tedit, dedit)
         if not tedit:
             self.TituloEdit_2.setStyleSheet("border:1px solid red")
         else:
@@ -694,14 +696,14 @@ class Gui(QMainWindow):
         text = self.TituloAgregar.text()
         desc = self.DescripcionAgregar.toPlainText()
         hym = self.HyMedit.time()
-        text,desc = self.es_vacio(text,desc)
+        text, desc = self.es_vacio(text, desc)
         priori = self.PrioridadAgregar.currentText()
         dias = self.DiasExtraAgregar.currentText()
-        desc=resultado_desc(desc)
+        desc = resultado_desc(desc)
         fecha_hoy = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         try:
             fec_venc = fecha_vencimiento(fecha, hym, "1")
-            agregar_tarea(text, desc, fec_venc,fecha_hoy, priori, dias)
+            agregar_tarea(text, desc, fec_venc, fecha_hoy, priori, dias)
             self.LabelMsj.setStyleSheet('color:blue; border:0px')
             self.LabelMsj.setText('Tarea agregada con exito')
             self.LabelMsj.show()
@@ -715,7 +717,7 @@ class Gui(QMainWindow):
     def cambiarBoton(self):
         text = self.TituloAgregar.text()
         desc = self.DescripcionAgregar.toPlainText()
-        text,desc = self.es_vacio(text,desc)
+        text, desc = self.es_vacio(text, desc)
         if text and desc:
             self.BotonAgregarT.setEnabled(True)
         else:
@@ -751,7 +753,7 @@ class Gui(QMainWindow):
         event.accept()
 
     def resizeEvent(self, event):
-        rect= self.rect()
+        rect = self.rect()
         self.grip.move(rect.right() - self.gripSize, rect.bottom() - self.gripSize)
 
         self.grip2.move(0, rect.bottom() - self.gripSize)
@@ -780,6 +782,7 @@ class Gui(QMainWindow):
 
     def cerrarBd(self):
         conexion.close()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

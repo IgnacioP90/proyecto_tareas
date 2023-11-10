@@ -1,16 +1,20 @@
 from datetime import *
 from ..bd_connect import *
+
 fecha_actual = datetime.now()
 
-def agregar_tarea(titulo, desc, fec_venc,fecha_hoy, prioridad, numero):
+
+def agregar_tarea(titulo, desc, fec_venc, fecha_hoy, prioridad, numero):
     conexion.execute(
         "INSERT INTO tareas (titulo, descripcion, creacion,fec_ven, prioridad, estado, limite) VALUES (?,?,?,?,?,?,?)",
-        (titulo, desc, fecha_hoy,fec_venc, prioridad, 'pendiente', numero))
+        (titulo, desc, fecha_hoy, fec_venc, prioridad, 'pendiente', numero))
     conexion.commit()
+
 
 def completar_tarea(titulo):
     conexion.execute("UPDATE tareas SET estado='completa' WHERE titulo=?", (titulo,))
     conexion.commit()
+
 
 def tareas_pendientes():
     result = conexion.execute("SELECT * FROM tareas WHERE estado='pendiente'")
@@ -19,6 +23,7 @@ def tareas_pendientes():
         return resultado
     else:
         return None
+
 
 def editar_tarea(titulo, variable, opcion):
     # selecciono la fila que tenga el mismo titulo que traje a la funcion, luego pregunto si esta en estado pendiente y ahi si la edito,
@@ -41,6 +46,7 @@ def editar_tarea(titulo, variable, opcion):
                 conexion.commit()
         # retorno una bandera para hacer una comprobacion
 
+
 def tareas_completas():
     result = conexion.execute("SELECT * FROM tareas WHERE estado='completa'")
     resultado = result.fetchall()
@@ -48,6 +54,7 @@ def tareas_completas():
         return resultado
     else:
         return None
+
 
 def buscar_tarea(variable, opcion):
     algo = None
@@ -67,6 +74,7 @@ def buscar_tarea(variable, opcion):
     if not algo:
         return None
 
+
 def busqueda(texto):
     res = conexion.execute("SELECT * FROM tareas WHERE titulo=?", (texto,))
     result = res.fetchone()
@@ -75,6 +83,7 @@ def busqueda(texto):
     else:
         return None
 
+
 def todas():
     result = conexion.execute("SELECT * FROM tareas")
     resultado = result.fetchall()
@@ -82,6 +91,7 @@ def todas():
         return resultado
     else:
         return None
+
 
 def convertir(fec_venc, eleccion=None):  # convierto la variable fec_venc a datetime, a menos que ya sea
     if type(fec_venc) != datetime:
@@ -96,8 +106,10 @@ def convertir(fec_venc, eleccion=None):  # convierto la variable fec_venc a date
         vence = fec_venc
     return vence
 
+
 # funcion para ingresar las fechas en las distintas opciones
-def fecha_vencimiento(fecha, hym,eleccion=None):  # eleccion=None lo use porque hay veces que mando un parametro y otras veces no
+def fecha_vencimiento(fecha, hym,
+                      eleccion=None):  # eleccion=None lo use porque hay veces que mando un parametro y otras veces no
     # ingreso la fecha para luego convertirla a formato datetime
     if eleccion == "2":
         fecha_str = fecha.toString("yyyy-MM-dd")
@@ -111,6 +123,7 @@ def fecha_vencimiento(fecha, hym,eleccion=None):  # eleccion=None lo use porque 
         fecha_hora_str = fecha_str + " " + hora_str
         fec_venc = convertir(fecha_hora_str, eleccion)
     return fec_venc
+
 
 # actualiza las tareas, cuando la fecha de vencimiento de la tarea, sobrepasa a la tarea actual, cada una de ellas tendra el estado a vencida, estando en estado pendiente
 def actualizar(fecha_actual):
@@ -135,12 +148,14 @@ def actualizar(fecha_actual):
             conexion.execute("UPDATE tareas SET estado='pendiente' WHERE titulo=? and fec_ven=?", (stat[0], fecha))
             conexion.commit()
 
+
 def BorrarTodo():
-    query=conexion.execute("SELECT * FROM tareas")
-    result=query.fetchall()
+    query = conexion.execute("SELECT * FROM tareas")
+    result = query.fetchall()
     if result:
         conexion.execute("DELETE FROM tareas")
         conexion.commit()
+
 
 def vencimientos():
     a = 0
@@ -152,7 +167,8 @@ def vencimientos():
     if todo:
         for tareas in todo:
             s = convertir(tareas[3])  # Debo convertirlo a tipo datetime porque desde la base de datos esta en tipo str
-            limit = cantidad_dias(s, tareas[6])  # actualizo la fecha de vencimiento para que me muestre la fecha sumado a los dias que se le agrega al vencimiento, seria, sumando fecha de vencimiento y limite
+            limit = cantidad_dias(s, tareas[
+                6])  # actualizo la fecha de vencimiento para que me muestre la fecha sumado a los dias que se le agrega al vencimiento, seria, sumando fecha de vencimiento y limite
             vencidas = limit - fecha_actual  # resto la fecha actual con cada una de las fechas que aparecen en la base de datos
             tareas_por_vencer = vencidas.days * 24 + vencidas.seconds // 3600  # convierto la fecha en numeros, el equivalente a las horas.
             dias = vencidas.days
@@ -176,8 +192,9 @@ def vencimientos():
                 c.append(tareas[0])
         return a, b, c, d
 
+
 def delete(titulo):
-    resultado=busqueda(titulo)
+    resultado = busqueda(titulo)
     if resultado:
         conexion.execute("DELETE FROM tareas WHERE titulo=?", (titulo,))
         conexion.commit()
@@ -185,11 +202,13 @@ def delete(titulo):
     else:
         return None
 
+
 def cantidad_dias(fec_venc, limite):
     if limite == 0:
         return fec_venc
     dias = fec_venc + timedelta(days=limite)
     return dias
+
 
 def mostrar_vencidas(vencidas=None, vencen_1=None, titulos=None, vencen=None):
     mensaje = ""
@@ -200,27 +219,31 @@ def mostrar_vencidas(vencidas=None, vencen_1=None, titulos=None, vencen=None):
     else:
         mensaje += "Felicidades, no tienes tareas vencidas!\n"
     mensaje += f"Cantidad de tareas que vencen en un día: {vencen_1}\n"
-    mensaje += "--"*25
+    mensaje += "--" * 25
     mensaje += "\nNombre de la(s) tarea(s) que vencerá(n) en una semana:\n"
     for titulo, vencimiento in zip(titulos, vencen):
         mensaje += f" Titulo: {titulo} - Vence en: {vencimiento}\n"
+    if vencen_1 == 0:
+        mensaje = "No Hay Tareas"
     return mensaje, vencen_1
 
+
 def solo_no_completas():
-    query=conexion.execute("SELECT * FROM tareas WHERE estado='vencida' OR estado='pendiente'")
-    result=query.fetchall()
+    query = conexion.execute("SELECT * FROM tareas WHERE estado='vencida' OR estado='pendiente'")
+    result = query.fetchall()
     if result:
         return result
     else:
         return None
 
+
 def resultado_desc(desc):
     contador = 0
     resultado = ""
     for caracter in desc:
-            resultado += caracter
-            contador += 1
-            if contador >= 22 and caracter==" ":
-                    resultado += '\n'
-                    contador=0
+        resultado += caracter
+        contador += 1
+        if contador >= 22 and caracter == " ":
+            resultado += '\n'
+            contador = 0
     return resultado
