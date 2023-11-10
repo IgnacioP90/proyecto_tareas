@@ -1,1 +1,8 @@
 *.db
+__pycache__
+.vscode
+venv
+.git
+.idea
+output
+icono.ico
