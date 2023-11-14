@@ -143,6 +143,7 @@ class Gui(QMainWindow):
         self.tray_icon.setContextMenu(menu)  # configuro aqui la notificacion, con su icono y el tiempo que este activa
         self.notificacion()
         self.BotonAgregarT.clicked.connect(self.notificacion)
+        self.calendarWidgetAgregar.selectionChanged.connect(self.cambiarHorario)
 
     def ocultar_labels(self):
         self.label_8.hide()
@@ -176,7 +177,7 @@ class Gui(QMainWindow):
             elemento.setGraphicsEffect(sombra)
 
     def actualizarHora(self):
-        hora = QTime.currentTime().addSecs(7200)
+        hora = QTime.currentTime().addSecs(0)
         self.HyMedit.setTime(hora)
         self.HyMedit.timeChanged.connect(self.cambiarHorario)
 
@@ -233,7 +234,7 @@ class Gui(QMainWindow):
     def cambiarHorario(self):
         fecha = self.calendarWidgetAgregar.selectedDate()
         if fecha_actual == fecha:
-            self.HyMedit.setMinimumTime(QTime.currentTime().addSecs(7200))
+            self.HyMedit.setMinimumTime(QTime.currentTime().addSecs(1799))
         else:
             self.HyMedit.setMinimumTime(QTime(0, 0))
 
